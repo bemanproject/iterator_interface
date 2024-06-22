@@ -1,0 +1,4 @@
+cff-version: 1.0.0
+message: "If you use this software, please cite it as below."
+title: "Beman.iterator"
+url: "https://github.com/beman-project/iterator_interface"
