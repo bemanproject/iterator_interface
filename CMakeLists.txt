@@ -2,12 +2,14 @@ cmake_minimum_required(VERSION 3.10)
 
 project(beman_iter_interface VERSION 0.0.0 LANGUAGES CXX)
 
+include(FetchContent)
+
 enable_testing()
 
 set(TARGETS_EXPORT_NAME ${CMAKE_PROJECT_NAME}Targets)
 
 add_subdirectory(extern)
-add_subdirectory(src)
+add_subdirectory(src/beman/iterator_interface26)
 add_subdirectory(examples)
 
 include(GNUInstallDirs)

@@ -1,13 +1,13 @@
 // iterator_interface.t.cpp                                           -*-C++-*-
-#include <Beman/iterator/iterator_interface.hpp>
-#include <Beman/iterator/iterator_interface.hpp>
+#include <beman/iterator_interface26/iterator_interface.hpp>
+#include <beman/iterator_interface26/iterator_interface.hpp>
 
 #include <gtest/gtest.h>
 
 #include <ranges>
 
-namespace Beman {
-namespace iterator {
+namespace beman {
+namespace iterator_interface26 {
 
 namespace {} // namespace
 
