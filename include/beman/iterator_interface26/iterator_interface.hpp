@@ -6,8 +6,8 @@
 #include <type_traits>
 #include <iterator>
 
-namespace Beman {
-namespace iterator {
+namespace beman {
+namespace iterator_interface26 {
 
 using std::conditional_t;
 using std::convertible_to;

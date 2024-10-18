@@ -1,5 +1,3 @@
-set(BEMAN_ITERATOR_LIBRARY "beman_iterator")
-
 include(GNUInstallDirs)
 
 # List of all buildable examples.
@@ -19,7 +17,7 @@ foreach(EXAMPLE ${EXAMPLES})
   )
 
   # Link example with the library.
-  target_link_libraries(${EXAMPLE} "${BEMAN_ITERATOR_LIBRARY}")
+  target_link_libraries(${EXAMPLE} beman.iterator_interface26)
 
   # Install .
   install(
