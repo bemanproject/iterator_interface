@@ -4,6 +4,7 @@
 
 #include <gtest/gtest.h>
 
+#include <algorithm>
 #include <ranges>
 
 namespace beman {
@@ -13,7 +14,13 @@ namespace {} // namespace
 
 TEST(IteratorTest, TestGTest) { ASSERT_EQ(1, 1); }
 
-struct repeated_chars_iterator : iterator_interface<std::random_access_iterator_tag, char, char> {
+struct repeated_chars_iterator : iterator_interface<
+#if !BEMAN_ITERATOR_INTERFACE26_USE_DEDUCING_THIS()
+                                     repeated_chars_iterator,
+#endif
+                                     std::random_access_iterator_tag,
+                                     char,
+                                     char> {
     constexpr repeated_chars_iterator() : first_(nullptr), size_(0), n_(0) {}
     constexpr repeated_chars_iterator(const char* first, difference_type size, difference_type n)
         : first_(first), size_(size), n_(n) {}
@@ -40,7 +47,12 @@ TEST(IteratorTest, TestRepeatedChars) {
 }
 
 template <typename Pred>
-struct filtered_int_iterator : iterator_interface<std::forward_iterator_tag, int> {
+struct filtered_int_iterator : iterator_interface<
+#if !BEMAN_ITERATOR_INTERFACE26_USE_DEDUCING_THIS()
+                                   filtered_int_iterator<Pred>,
+#endif
+                                   std::forward_iterator_tag,
+                                   int> {
     filtered_int_iterator() : it_(nullptr) {}
     filtered_int_iterator(int* it, int* last, Pred pred) : it_(it), last_(last), pred_(std::move(pred)) {
         it_ = std::find_if(it_, last_, pred_);
@@ -66,7 +78,11 @@ struct filtered_int_iterator : iterator_interface<std::forward_iterator_tag, int
     // These functions are picked up by iterator_interface, and used to
     // implement any operations that you don't define above.  They're not
     // called base() so that they do not collide with the base() member above.
+#ifdef __cpp_explicit_this_parameter
     constexpr decltype(auto) base_reference(this auto& self) noexcept { return self.it_; }
+#else
+    constexpr decltype(auto) base_reference() noexcept { return it_; }
+#endif
 
     int* it_;
     int* last_;
@@ -85,7 +101,13 @@ struct ClassWithMemberFunction {
     int f() { return 3; }
 };
 
-struct AlwaysIterator : iterator_interface<std::random_access_iterator_tag, ClassWithMemberFunction> {
+struct AlwaysIterator : iterator_interface<
+#if !BEMAN_ITERATOR_INTERFACE26_USE_DEDUCING_THIS()
+                            AlwaysIterator,
+#endif
+
+                            std::random_access_iterator_tag,
+                            ClassWithMemberFunction> {
     AlwaysIterator() : size_(0), n_(0) {}
     AlwaysIterator(difference_type size, difference_type n) : size_(size), n_(n) {}
 

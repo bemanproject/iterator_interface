@@ -2,12 +2,20 @@
 #ifndef INCLUDED_ITERATOR_INTERFACE
 #define INCLUDED_ITERATOR_INTERFACE
 
+#include <beman/iterator_interface26/config.hpp>
+#include <beman/iterator_interface26/iterator_interface_access.hpp>
+#if !BEMAN_ITERATOR_INTERFACE26_USE_DEDUCING_THIS()
+#include <beman/iterator_interface26/detail/stl_interfaces/iterator_interface.hpp>
+#endif
+
 #include <concepts>
 #include <type_traits>
 #include <iterator>
 
 namespace beman {
 namespace iterator_interface26 {
+
+#if BEMAN_ITERATOR_INTERFACE26_USE_DEDUCING_THIS()
 
 using std::conditional_t;
 using std::convertible_to;
@@ -23,22 +31,6 @@ using std::same_as;
 
 using std::input_iterator_tag;
 using std::strong_ordering;
-
-// [iterator.interface], iterator interface
-// [iterator.interface.helpers], iterator interface helpers
-struct iterator_interface_access; // freestanding
-
-struct iterator_interface_access {
-    template <typename D>
-    static constexpr auto base(D& d) noexcept -> decltype(d.base_reference()) {
-        return d.base_reference();
-    }
-
-    template <typename D>
-    static constexpr auto base(const D& d) noexcept -> decltype(d.base_reference()) {
-        return d.base_reference();
-    }
-};
 
 template <typename T>
     requires is_object_v<T>
@@ -339,7 +331,14 @@ constexpr bool operator==(D1 lhs, D2 rhs)
         return (lhs - rhs) == typename D1::difference_type(0);
     }
 }
-} // namespace iterator
-} // namespace Beman
+
+#else
+
+using detail::stl_interfaces::iterator_interface;
+
+#endif
+
+} // namespace iterator_interface26
+} // namespace beman
 
 #endif
