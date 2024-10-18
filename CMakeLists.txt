@@ -9,7 +9,7 @@ include(CompilerFeatureTest)
 beman_iterator26_check_deducing_this(COMPILER_SUPPORTS_DEDUCING_THIS)
 
 if(NOT COMPILER_SUPPORTS_DEDUCING_THIS)
-  message(FATAL_ERROR "The selected compiler and flags lacks C++23's deducing this support, which is required to build this project. Try adding -DCMAKE_CXX_STANDARD=23 to your command line parameters and, failing that, upgrade your compiler.")
+  message(FATAL_ERROR "The selected compiler and flags lack C++23's deducing this support, which is required to build this project. Try adding -DCMAKE_CXX_STANDARD=23 to your command line parameters and, failing that, upgrade your compiler.")
 endif()
 
 enable_testing()
