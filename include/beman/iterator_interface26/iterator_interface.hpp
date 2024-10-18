@@ -131,7 +131,7 @@ template <class Pointer, class Reference, class T>
     requires is_pointer_v<Pointer>
 decltype(auto) make_iterator_pointer(T&& value) // exposition only
 {
-    return addressof(value);
+    return std::addressof(value);
 }
 
 template <class Pointer, class Reference, class T>

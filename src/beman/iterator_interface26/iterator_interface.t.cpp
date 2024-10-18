@@ -72,6 +72,7 @@ struct filtered_int_iterator : iterator_interface<std::forward_iterator_tag, int
     int* last_;
     Pred pred_;
 };
+
 TEST(IteratorTest, TestFilteredIter) {
     int                   a[] = {1, 2, 3, 4};
     filtered_int_iterator f{std::begin(a), std::end(a), [](int i) { return (i % 2) == 0; }};
@@ -79,5 +80,34 @@ TEST(IteratorTest, TestFilteredIter) {
     ++f;
     ASSERT_EQ(*f, 4);
 }
-} // namespace iterator
-} // namespace Beman
+
+struct ClassWithMemberFunction {
+    int f() { return 3; }
+};
+
+struct AlwaysIterator : iterator_interface<std::random_access_iterator_tag, ClassWithMemberFunction> {
+    AlwaysIterator() : size_(0), n_(0) {}
+    AlwaysIterator(difference_type size, difference_type n) : size_(size), n_(n) {}
+
+    ClassWithMemberFunction operator*() const { return value_; }
+    AlwaysIterator&         operator+=(std::ptrdiff_t i) {
+        n_ += i;
+        return *this;
+    }
+    auto operator-(AlwaysIterator other) const { return n_ - other.n_; }
+
+  private:
+    ClassWithMemberFunction value_;
+    const char*             first_;
+    difference_type         size_;
+    difference_type         n_;
+};
+
+// Confirm operator-> works as expected
+TEST(IteratorTest, OperatorArrow) {
+    AlwaysIterator ai;
+    ASSERT_EQ(ai->f(), 3);
+}
+
+} // namespace iterator_interface26
+} // namespace beman
