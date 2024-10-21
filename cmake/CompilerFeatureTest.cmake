@@ -6,7 +6,9 @@ include(CheckCXXSourceCompiles)
 # 'result_var' to whether support is detected.
 function(beman_iterator26_check_deducing_this result_var)
   check_cxx_source_compiles( "
-#ifndef __cpp_explicit_this_parameter
+// clang-specific check due to http://github.com/llvm/llvm-project/issues/113174
+#if defined(__cpp_explicit_this_parameter) || (defined(__clang__) && __has_extension(cxx_explicit_this_parameter))
+#else
 #error No deducing this support
 #endif
 int main(){}
