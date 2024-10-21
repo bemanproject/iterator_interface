@@ -2,7 +2,15 @@ cmake_minimum_required(VERSION 3.10)
 
 project(beman_iter_interface VERSION 0.0.0 LANGUAGES CXX)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 include(FetchContent)
+include(CompilerFeatureTest)
+
+beman_iterator26_check_deducing_this(COMPILER_SUPPORTS_DEDUCING_THIS)
+
+if(NOT COMPILER_SUPPORTS_DEDUCING_THIS)
+  message(FATAL_ERROR "The selected compiler and flags lack C++23's deducing this support, which is required to build this project. Try adding -DCMAKE_CXX_STANDARD=23 to your command line parameters and, failing that, upgrade your compiler.")
+endif()
 
 enable_testing()
 
