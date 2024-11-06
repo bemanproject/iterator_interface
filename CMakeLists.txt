@@ -12,6 +12,8 @@ option(BEMAN_ITERATOR_INTERFACE26_USE_DEDUCING_THIS
   "Make use of deducing this. Turn this off for non-conforming compilers."
   ${COMPILER_SUPPORTS_DEDUCING_THIS})
 
+option(BEMAN_ITERATOR_INTERFACE26_ENABLE_TESTING "Build beman.iterator_interface26 tests" ${PROJECT_IS_TOP_LEVEL})
+
 if(BEMAN_ITERATOR_INTERFACE26_USE_DEDUCING_THIS AND NOT COMPILER_SUPPORTS_DEDUCING_THIS)
   message(WARNING "Building with deducing this support despite of the compiler's lack of support for it")
 endif()
@@ -22,7 +24,9 @@ configure_file(
   @ONLY
 )
 
-enable_testing()
+if(BEMAN_ITERATOR_INTERFACE26_ENABLE_TESTING)
+  enable_testing()
+endif()
 
 set(TARGETS_EXPORT_NAME ${CMAKE_PROJECT_NAME}Targets)
 

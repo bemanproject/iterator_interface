@@ -33,7 +33,7 @@ install(
 target_link_libraries(beman.iterator_interface26)
 
 ## Tests
-if(BUILD_TESTING)
+if(BEMAN_ITERATOR_INTERFACE26_ENABLE_TESTING)
     add_executable(iterator_interface_test "")
 
     target_sources(
