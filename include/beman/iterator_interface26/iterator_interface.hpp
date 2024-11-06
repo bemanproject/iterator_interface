@@ -45,7 +45,6 @@ class proxy_arrow_result {
     constexpr T*       operator->() noexcept { return &value_; }
 };
 
-
 // [iterator.interface.tmpl], class template iterator_interface
 template <class IteratorConcept,
           class ValueType,
@@ -141,7 +140,7 @@ struct iter_cat<IteratorConcept, ReferenceType, false> {};
 
 template <typename IteratorConcept, typename ReferenceType>
 struct iter_cat<IteratorConcept, ReferenceType, true> {
-    constexpr static auto compute_category_tag() {
+    static constexpr auto compute_category_tag() {
         if constexpr (!std::is_reference_v<ReferenceType>) {
             return std::input_iterator_tag{};
         } else if constexpr (std::is_base_of_v<std::random_access_iterator_tag, IteratorConcept>) {
@@ -153,7 +152,7 @@ struct iter_cat<IteratorConcept, ReferenceType, true> {
         }
     }
 
-    using TagType = std::invoke_result_t<decltype(compute_category_tag)>;
+    using TagType           = std::invoke_result_t<decltype(compute_category_tag)>;
     using iterator_category = TagType;
 };
 
@@ -162,13 +161,14 @@ struct iter_cat<IteratorConcept, ReferenceType, true> {
 template <class IteratorConcept, class ValueType, class Reference, class Pointer, class DifferenceType>
 class iterator_interface {
   public:
-    using iterator_concept  = IteratorConcept;
-    using iterator_category = detail::iter_cat < IteratorConcept, Reference,
-                                                 std::derived_from<IteratorConcept, std::forward_iterator_tag>>::iterator_category;
-    using value_type        = remove_const_t<ValueType>;
-    using reference         = Reference;
-    using pointer           = conditional_t<is_same_v<iterator_concept, output_iterator_tag>, void, Pointer>;
-    using difference_type   = DifferenceType;
+    using iterator_concept = IteratorConcept;
+    using iterator_category =
+        detail::iter_cat<IteratorConcept, Reference, std::derived_from<IteratorConcept, std::forward_iterator_tag>>::
+            iterator_category;
+    using value_type      = remove_const_t<ValueType>;
+    using reference       = Reference;
+    using pointer         = conditional_t<is_same_v<iterator_concept, output_iterator_tag>, void, Pointer>;
+    using difference_type = DifferenceType;
 
     constexpr decltype(auto) operator*(this auto&& self)
         requires requires { *iterator_interface_access::base(self); }
@@ -332,9 +332,43 @@ constexpr bool operator==(D1 lhs, D2 rhs)
     }
 }
 
+template <typename Derived,
+          typename IteratorConcept,
+          typename ValueType,
+          typename Reference      = ValueType&,
+          typename Pointer        = ValueType*,
+          typename DifferenceType = std::ptrdiff_t>
+using ext_iterator_interface_compat =
+    iterator_interface<IteratorConcept, ValueType, Reference, Pointer, DifferenceType>;
+
 #else
 
-using detail::stl_interfaces::iterator_interface;
+namespace detail {
+template <class>
+constexpr bool dependent_false = false; // workaround before CWG2518/P2593R1
+}
+
+template <class IteratorConcept,
+          class ValueType,
+          class Reference      = ValueType&,
+          class Pointer        = ValueType*,
+          class DifferenceType = std::ptrdiff_t>
+class iterator_interface {
+    static_assert(detail::dependent_false<IteratorConcept>,
+                  "beman.iterator_interface was compiled with "
+                  "BEMAN_ITERATOR_INTERFACE26_USE_DEDUCING_THIS set to FALSE so "
+                  "beman::iterator_interface26::iterator_interface is not available. See "
+                  "beman::iterator_interface26::ext_iterator_interface_compat for a portable alternative.");
+};
+
+template <typename Derived,
+          typename IteratorConcept,
+          typename ValueType,
+          typename Reference      = ValueType&,
+          typename Pointer        = ValueType*,
+          typename DifferenceType = std::ptrdiff_t>
+using ext_iterator_interface_compat = detail::stl_interfaces::
+    iterator_interface<Derived, IteratorConcept, ValueType, Reference, Pointer, DifferenceType>;
 
 #endif
 
