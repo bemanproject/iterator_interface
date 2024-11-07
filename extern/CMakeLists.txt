@@ -1,4 +1,4 @@
-if(BEMAN_ITERATOR_INTERFACE26_ENABLE_TESTING)
+if(BEMAN_ITERATOR_INTERFACE_ENABLE_TESTING)
     # Fetch GoogleTest
     FetchContent_Declare(
         googletest

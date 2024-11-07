@@ -1,4 +1,4 @@
-# Beman.iterator: C++26 Extensions for iterators
+# beman.iterator\_interface: iterator creation mechanisms
 
 
 **Implements**:
