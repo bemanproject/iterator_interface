@@ -1,6 +1,6 @@
 // iterator_interface.t.cpp                                           -*-C++-*-
-#include <beman/iterator_interface26/iterator_interface.hpp>
-#include <beman/iterator_interface26/iterator_interface.hpp>
+#include <beman/iterator_interface/iterator_interface.hpp>
+#include <beman/iterator_interface/iterator_interface.hpp>
 
 #include <gtest/gtest.h>
 
@@ -8,7 +8,7 @@
 #include <ranges>
 
 namespace beman {
-namespace iterator_interface26 {
+namespace iterator_interface {
 
 namespace {} // namespace
 
@@ -117,5 +117,5 @@ TEST(IteratorTest, OperatorArrow) {
     ASSERT_EQ(ai->f(), 3);
 }
 
-} // namespace iterator_interface26
+} // namespace iterator_interface
 } // namespace beman

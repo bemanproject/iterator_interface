@@ -17,7 +17,7 @@ foreach(EXAMPLE ${EXAMPLES})
   )
 
   # Link example with the library.
-  target_link_libraries(${EXAMPLE} beman.iterator_interface26)
+  target_link_libraries(${EXAMPLE} beman.iterator_interface)
 
   # Install .
   install(

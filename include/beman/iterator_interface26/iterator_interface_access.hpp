@@ -2,7 +2,7 @@
 #define ITERATOR_INTERFACE_ACCESSS_HPP
 
 namespace beman {
-namespace iterator_interface26 {
+namespace iterator_interface {
 // [iterator.interface], iterator interface
 // [iterator.interface.helpers], iterator interface helpers
 struct iterator_interface_access; // freestanding

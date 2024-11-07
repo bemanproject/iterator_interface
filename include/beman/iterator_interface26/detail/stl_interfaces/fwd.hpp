@@ -1,4 +1,3 @@
-// include/beman/optional26/detail/stl_interfaces/fwd.hpp -*-C++-*-
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
 // Copyright (C) 2019 T. Zachary Laine
@@ -6,36 +5,36 @@
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
-#ifndef BEMAN_ITERATOR_INTERFACE26_DETAIL_STL_INTERFACES_FWD_HPP
-#define BEMAN_ITERATOR_INTERFACE26_DETAIL_STL_INTERFACES_FWD_HPP
+#ifndef BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_FWD_HPP
+#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_FWD_HPP
 
-#include <beman/iterator_interface26/detail/stl_interfaces/config.hpp>
+#include <beman/iterator_interface/detail/stl_interfaces/config.hpp>
 
-#if BEMAN_ITERATOR_INTERFACE26_DETAIL_STL_INTERFACES_USE_CONCEPTS
+#if BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_USE_CONCEPTS
 #include <ranges>
 #endif
 #if defined(__cpp_lib_three_way_comparison)
 #include <compare>
 #endif
 
-#ifndef BEMAN_ITERATOR_INTERFACE26_DETAIL_STL_INTERFACES_DOXYGEN
+#ifndef BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_DOXYGEN
 
 #if defined(_MSC_VER) || defined(__GNUC__) && __GNUC__ < 8
-#define BEMAN_ITERATOR_INTERFACE26_DETAIL_STL_INTERFACES_NO_HIDDEN_FRIEND_CONSTEXPR
-#define BEMAN_ITERATOR_INTERFACE26_DETAIL_STL_INTERFACES_HIDDEN_FRIEND_CONSTEXPR
+#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_NO_HIDDEN_FRIEND_CONSTEXPR
+#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_HIDDEN_FRIEND_CONSTEXPR
 #else
-#define BEMAN_ITERATOR_INTERFACE26_DETAIL_STL_INTERFACES_HIDDEN_FRIEND_CONSTEXPR constexpr
+#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_HIDDEN_FRIEND_CONSTEXPR constexpr
 #endif
 
 #if defined(__GNUC__) && __GNUC__ < 9
-#define BEMAN_ITERATOR_INTERFACE26_DETAIL_STL_INTERFACES_CONCEPT concept bool
+#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_CONCEPT concept bool
 #else
-#define BEMAN_ITERATOR_INTERFACE26_DETAIL_STL_INTERFACES_CONCEPT concept
+#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_CONCEPT concept
 #endif
 
 #endif
 
-namespace beman::iterator_interface26::detail {
+namespace beman::iterator_interface::detail {
 namespace stl_interfaces {
 
 /** An enumeration used to indicate whether the underlying data have a
@@ -43,7 +42,7 @@ namespace stl_interfaces {
     and `sequence_container_interface`. */
 enum class element_layout : bool { discontiguous = false, contiguous = true };
 
-BEMAN_ITERATOR_INTERFACE26_DETAIL_STL_INTERFACES_NAMESPACE_V1 {
+BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_NAMESPACE_V1 {
 
     namespace v1_dtl {
     template <typename... T>
@@ -83,6 +82,6 @@ BEMAN_ITERATOR_INTERFACE26_DETAIL_STL_INTERFACES_NAMESPACE_V1 {
     } // namespace v1_dtl
 }
 } // namespace stl_interfaces
-} // namespace beman::optional26::detail
+} // namespace beman::iterator_interface::detail
 
 #endif

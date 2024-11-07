@@ -6,32 +6,32 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 include(FetchContent)
 include(CompilerFeatureTest)
 
-beman_iterator26_check_deducing_this(COMPILER_SUPPORTS_DEDUCING_THIS)
+beman_iterator_check_deducing_this(COMPILER_SUPPORTS_DEDUCING_THIS)
 
-option(BEMAN_ITERATOR_INTERFACE26_USE_DEDUCING_THIS
+option(BEMAN_ITERATOR_INTERFACE_USE_DEDUCING_THIS
   "Make use of deducing this. Turn this off for non-conforming compilers."
   ${COMPILER_SUPPORTS_DEDUCING_THIS})
 
-option(BEMAN_ITERATOR_INTERFACE26_ENABLE_TESTING "Build beman.iterator_interface26 tests" ${PROJECT_IS_TOP_LEVEL})
+option(BEMAN_ITERATOR_INTERFACE_ENABLE_TESTING "Build beman.iterator_interface tests" ${PROJECT_IS_TOP_LEVEL})
 
-if(BEMAN_ITERATOR_INTERFACE26_USE_DEDUCING_THIS AND NOT COMPILER_SUPPORTS_DEDUCING_THIS)
+if(BEMAN_ITERATOR_INTERFACE_USE_DEDUCING_THIS AND NOT COMPILER_SUPPORTS_DEDUCING_THIS)
   message(WARNING "Building with deducing this support despite of the compiler's lack of support for it")
 endif()
 
 configure_file(
-  "${PROJECT_SOURCE_DIR}/include/beman/iterator_interface26/config.hpp.in"
-  "${PROJECT_BINARY_DIR}/include/beman/iterator_interface26/config.hpp"
+  "${PROJECT_SOURCE_DIR}/include/beman/iterator_interface/config.hpp.in"
+  "${PROJECT_BINARY_DIR}/include/beman/iterator_interface/config.hpp"
   @ONLY
 )
 
-if(BEMAN_ITERATOR_INTERFACE26_ENABLE_TESTING)
+if(BEMAN_ITERATOR_INTERFACE_ENABLE_TESTING)
   enable_testing()
 endif()
 
 set(TARGETS_EXPORT_NAME ${CMAKE_PROJECT_NAME}Targets)
 
 add_subdirectory(extern)
-add_subdirectory(src/beman/iterator_interface26)
+add_subdirectory(src/beman/iterator_interface)
 add_subdirectory(examples)
 
 include(GNUInstallDirs)

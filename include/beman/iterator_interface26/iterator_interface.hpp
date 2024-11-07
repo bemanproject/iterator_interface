@@ -2,10 +2,10 @@
 #ifndef INCLUDED_ITERATOR_INTERFACE
 #define INCLUDED_ITERATOR_INTERFACE
 
-#include <beman/iterator_interface26/config.hpp>
-#include <beman/iterator_interface26/iterator_interface_access.hpp>
-#if !BEMAN_ITERATOR_INTERFACE26_USE_DEDUCING_THIS()
-#include <beman/iterator_interface26/detail/stl_interfaces/iterator_interface.hpp>
+#include <beman/iterator_interface/config.hpp>
+#include <beman/iterator_interface/iterator_interface_access.hpp>
+#if !BEMAN_ITERATOR_INTERFACE_USE_DEDUCING_THIS()
+#include <beman/iterator_interface/detail/stl_interfaces/iterator_interface.hpp>
 #endif
 
 #include <concepts>
@@ -13,9 +13,9 @@
 #include <iterator>
 
 namespace beman {
-namespace iterator_interface26 {
+namespace iterator_interface {
 
-#if BEMAN_ITERATOR_INTERFACE26_USE_DEDUCING_THIS()
+#if BEMAN_ITERATOR_INTERFACE_USE_DEDUCING_THIS()
 
 using std::conditional_t;
 using std::convertible_to;
@@ -356,9 +356,9 @@ template <class IteratorConcept,
 class iterator_interface {
     static_assert(detail::dependent_false<IteratorConcept>,
                   "beman.iterator_interface was compiled with "
-                  "BEMAN_ITERATOR_INTERFACE26_USE_DEDUCING_THIS set to FALSE so "
-                  "beman::iterator_interface26::iterator_interface is not available. See "
-                  "beman::iterator_interface26::ext_iterator_interface_compat for a portable alternative.");
+                  "BEMAN_ITERATOR_INTERFACE_USE_DEDUCING_THIS set to FALSE so "
+                  "beman::iterator_interface::iterator_interface is not available. See "
+                  "beman::iterator_interface::ext_iterator_interface_compat for a portable alternative.");
 };
 
 template <typename Derived,
@@ -372,7 +372,7 @@ using ext_iterator_interface_compat = detail::stl_interfaces::
 
 #endif
 
-} // namespace iterator_interface26
+} // namespace iterator_interface
 } // namespace beman
 
 #endif
