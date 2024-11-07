@@ -8,11 +8,25 @@ include(CompilerFeatureTest)
 
 beman_iterator26_check_deducing_this(COMPILER_SUPPORTS_DEDUCING_THIS)
 
-if(NOT COMPILER_SUPPORTS_DEDUCING_THIS)
-  message(FATAL_ERROR "The selected compiler and flags lack C++23's deducing this support, which is required to build this project. Try adding -DCMAKE_CXX_STANDARD=23 to your command line parameters and, failing that, upgrade your compiler.")
+option(BEMAN_ITERATOR_INTERFACE26_USE_DEDUCING_THIS
+  "Make use of deducing this. Turn this off for non-conforming compilers."
+  ${COMPILER_SUPPORTS_DEDUCING_THIS})
+
+option(BEMAN_ITERATOR_INTERFACE26_ENABLE_TESTING "Build beman.iterator_interface26 tests" ${PROJECT_IS_TOP_LEVEL})
+
+if(BEMAN_ITERATOR_INTERFACE26_USE_DEDUCING_THIS AND NOT COMPILER_SUPPORTS_DEDUCING_THIS)
+  message(WARNING "Building with deducing this support despite of the compiler's lack of support for it")
 endif()
 
-enable_testing()
+configure_file(
+  "${PROJECT_SOURCE_DIR}/include/beman/iterator_interface26/config.hpp.in"
+  "${PROJECT_BINARY_DIR}/include/beman/iterator_interface26/config.hpp"
+  @ONLY
+)
+
+if(BEMAN_ITERATOR_INTERFACE26_ENABLE_TESTING)
+  enable_testing()
+endif()
 
 set(TARGETS_EXPORT_NAME ${CMAKE_PROJECT_NAME}Targets)
 

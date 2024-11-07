@@ -11,7 +11,8 @@ include(GNUInstallDirs)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 target_include_directories(beman.iterator_interface26 PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../../include>
+  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
   $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${CMAKE_LOWER_PROJECT_NAME}>  # <prefix>/include/scratch
 )
 
@@ -32,7 +33,7 @@ install(
 target_link_libraries(beman.iterator_interface26)
 
 ## Tests
-if(BUILD_TESTING)
+if(BEMAN_ITERATOR_INTERFACE26_ENABLE_TESTING)
     add_executable(iterator_interface_test "")
 
     target_sources(

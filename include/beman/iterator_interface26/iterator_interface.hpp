@@ -2,12 +2,20 @@
 #ifndef INCLUDED_ITERATOR_INTERFACE
 #define INCLUDED_ITERATOR_INTERFACE
 
+#include <beman/iterator_interface26/config.hpp>
+#include <beman/iterator_interface26/iterator_interface_access.hpp>
+#if !BEMAN_ITERATOR_INTERFACE26_USE_DEDUCING_THIS()
+#include <beman/iterator_interface26/detail/stl_interfaces/iterator_interface.hpp>
+#endif
+
 #include <concepts>
 #include <type_traits>
 #include <iterator>
 
 namespace beman {
 namespace iterator_interface26 {
+
+#if BEMAN_ITERATOR_INTERFACE26_USE_DEDUCING_THIS()
 
 using std::conditional_t;
 using std::convertible_to;
@@ -24,22 +32,6 @@ using std::same_as;
 using std::input_iterator_tag;
 using std::strong_ordering;
 
-// [iterator.interface], iterator interface
-// [iterator.interface.helpers], iterator interface helpers
-struct iterator_interface_access; // freestanding
-
-struct iterator_interface_access {
-    template <typename D>
-    static constexpr auto base(D& d) noexcept -> decltype(d.base_reference()) {
-        return d.base_reference();
-    }
-
-    template <typename D>
-    static constexpr auto base(const D& d) noexcept -> decltype(d.base_reference()) {
-        return d.base_reference();
-    }
-};
-
 template <typename T>
     requires is_object_v<T>
 class proxy_arrow_result {
@@ -52,7 +44,6 @@ class proxy_arrow_result {
     constexpr const T* operator->() const noexcept { return &value_; }
     constexpr T*       operator->() noexcept { return &value_; }
 };
-
 
 // [iterator.interface.tmpl], class template iterator_interface
 template <class IteratorConcept,
@@ -149,7 +140,7 @@ struct iter_cat<IteratorConcept, ReferenceType, false> {};
 
 template <typename IteratorConcept, typename ReferenceType>
 struct iter_cat<IteratorConcept, ReferenceType, true> {
-    constexpr static auto compute_category_tag() {
+    static constexpr auto compute_category_tag() {
         if constexpr (!std::is_reference_v<ReferenceType>) {
             return std::input_iterator_tag{};
         } else if constexpr (std::is_base_of_v<std::random_access_iterator_tag, IteratorConcept>) {
@@ -161,7 +152,7 @@ struct iter_cat<IteratorConcept, ReferenceType, true> {
         }
     }
 
-    using TagType = std::invoke_result_t<decltype(compute_category_tag)>;
+    using TagType           = std::invoke_result_t<decltype(compute_category_tag)>;
     using iterator_category = TagType;
 };
 
@@ -170,13 +161,14 @@ struct iter_cat<IteratorConcept, ReferenceType, true> {
 template <class IteratorConcept, class ValueType, class Reference, class Pointer, class DifferenceType>
 class iterator_interface {
   public:
-    using iterator_concept  = IteratorConcept;
-    using iterator_category = detail::iter_cat < IteratorConcept, Reference,
-                                                 std::derived_from<IteratorConcept, std::forward_iterator_tag>>::iterator_category;
-    using value_type        = remove_const_t<ValueType>;
-    using reference         = Reference;
-    using pointer           = conditional_t<is_same_v<iterator_concept, output_iterator_tag>, void, Pointer>;
-    using difference_type   = DifferenceType;
+    using iterator_concept = IteratorConcept;
+    using iterator_category =
+        detail::iter_cat<IteratorConcept, Reference, std::derived_from<IteratorConcept, std::forward_iterator_tag>>::
+            iterator_category;
+    using value_type      = remove_const_t<ValueType>;
+    using reference       = Reference;
+    using pointer         = conditional_t<is_same_v<iterator_concept, output_iterator_tag>, void, Pointer>;
+    using difference_type = DifferenceType;
 
     constexpr decltype(auto) operator*(this auto&& self)
         requires requires { *iterator_interface_access::base(self); }
@@ -339,7 +331,48 @@ constexpr bool operator==(D1 lhs, D2 rhs)
         return (lhs - rhs) == typename D1::difference_type(0);
     }
 }
-} // namespace iterator
-} // namespace Beman
+
+template <typename Derived,
+          typename IteratorConcept,
+          typename ValueType,
+          typename Reference      = ValueType&,
+          typename Pointer        = ValueType*,
+          typename DifferenceType = std::ptrdiff_t>
+using ext_iterator_interface_compat =
+    iterator_interface<IteratorConcept, ValueType, Reference, Pointer, DifferenceType>;
+
+#else
+
+namespace detail {
+template <class>
+constexpr bool dependent_false = false; // workaround before CWG2518/P2593R1
+}
+
+template <class IteratorConcept,
+          class ValueType,
+          class Reference      = ValueType&,
+          class Pointer        = ValueType*,
+          class DifferenceType = std::ptrdiff_t>
+class iterator_interface {
+    static_assert(detail::dependent_false<IteratorConcept>,
+                  "beman.iterator_interface was compiled with "
+                  "BEMAN_ITERATOR_INTERFACE26_USE_DEDUCING_THIS set to FALSE so "
+                  "beman::iterator_interface26::iterator_interface is not available. See "
+                  "beman::iterator_interface26::ext_iterator_interface_compat for a portable alternative.");
+};
+
+template <typename Derived,
+          typename IteratorConcept,
+          typename ValueType,
+          typename Reference      = ValueType&,
+          typename Pointer        = ValueType*,
+          typename DifferenceType = std::ptrdiff_t>
+using ext_iterator_interface_compat = detail::stl_interfaces::
+    iterator_interface<Derived, IteratorConcept, ValueType, Reference, Pointer, DifferenceType>;
+
+#endif
+
+} // namespace iterator_interface26
+} // namespace beman
 
 #endif
