@@ -1,3 +1,7 @@
+# CMakeLists.txt -*-CMake-*-
+#
+# SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+
 cmake_minimum_required(VERSION 3.10)
 
 project(beman_iter_interface VERSION 0.0.0 LANGUAGES CXX)

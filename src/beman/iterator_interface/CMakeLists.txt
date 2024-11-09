@@ -1,3 +1,7 @@
+# src/beman/iterator_interface/CMakeLists.txt -*-CMake-*-
+#
+# SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+
 add_library(beman.iterator_interface)
 add_library(beman::iterator_interface ALIAS beman.iterator_interface)
 
