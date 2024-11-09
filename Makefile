@@ -1,7 +1,6 @@
 #! /usr/bin/make -f
 # /Makefile -*-makefile-*-
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
-# cmake-format: on
 
 INSTALL_PREFIX?=.install/
 PROJECT?=$(shell basename $(CURDIR))
