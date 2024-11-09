@@ -1,5 +1,9 @@
 # Beman.iterator Examples
 
+<!--
+SPDX-License-Identifier: 2.0 license with LLVM exceptions
+-->
+
 List of usage examples for `Beman.iterator`.
 
 ## Sample

@@ -1,3 +1,7 @@
+# examples/CMakeLists.txt -*-CMake-*-
+#
+# SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+
 include(GNUInstallDirs)
 
 # List of all buildable examples.
