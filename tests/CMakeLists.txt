@@ -18,7 +18,7 @@ target_link_libraries(
   beman.iterator_interface.tests PRIVATE beman::iterator_interface GTest::gtest
                                          GTest::gtest_main)
 
-# Issue #32: Re-enable ASAN run CI/clang-19.
+# Issue #18: Re-enable ASAN run CI/clang-19.
 #
 # Note: clang-19 + gtest_discover_tests + Asan setup causes errors on some
 # platforms. Temporary switch to gtest_add_tests and skip some Asan checks.
