@@ -1,32 +1,24 @@
-# examples/CMakeLists.txt -*-CMake-*-
-#
+# cmake-format: off
+# examples/CMakeLists.txt -*-makefile-*-
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
-
-include(GNUInstallDirs)
+# cmake-format: on
 
 # List of all buildable examples.
-set(EXAMPLES
-  sample
-)
+set(EXAMPLES sample)
 
-foreach(EXAMPLE ${EXAMPLES})
+foreach(example ${EXAMPLES})
   # Add example executable.
-  add_executable(${EXAMPLE} "")
+  add_executable(${example} "")
 
   # Add example source file.
-  target_sources(
-    ${EXAMPLE}
-    PRIVATE
-    ${EXAMPLE}.cpp
-  )
+  target_sources(${example} PRIVATE ${example}.cpp)
 
   # Link example with the library.
-  target_link_libraries(${EXAMPLE} beman.iterator_interface)
+  target_link_libraries(${example} beman_iterator_interface)
 
-  # Install .
+  # Install.
   install(
-    TARGETS ${EXAMPLE}
-    EXPORT ${TARGETS_EXPORT_NAME}
-    DESTINATION ${CMAKE_INSTALL_BINDIR}
-  )
+    TARGETS ${example}
+    COMPONENT beman_iterator_interface_examples
+    DESTINATION ${CMAKE_INSTALL_BINDIR})
 endforeach()
