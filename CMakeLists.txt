@@ -34,7 +34,7 @@ if(BEMAN_ITERATOR_INTERFACE_USE_DEDUCING_THIS
    AND NOT COMPILER_SUPPORTS_DEDUCING_THIS)
   message(
     WARNING
-      "Building with deducing this support despite of the compiler's lack of support for it"
+      "Building with  C++23 "deducing this" feature (P0847R7) despite of the compiler's lack of actual support for it."
   )
 endif()
 
