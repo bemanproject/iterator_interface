@@ -24,7 +24,7 @@ beman_iterator_check_deducing_this(COMPILER_SUPPORTS_DEDUCING_THIS)
 set(TARGETS_EXPORT_NAME ${CMAKE_PROJECT_NAME}Targets)
 
 option(BEMAN_ITERATOR_INTERFACE_USE_DEDUCING_THIS
-       "Make use of C++23 "deducing this" feature (P0847R7). Turn this off for non-conforming compilers."
+       "Make use of C++23 \"deducing this\" feature (P0847R7). Turn this off for non-conforming compilers."
        ${COMPILER_SUPPORTS_DEDUCING_THIS})
 
 option(ITERATOR_INTERFACE_ENABLE_TESTING
@@ -34,7 +34,7 @@ if(BEMAN_ITERATOR_INTERFACE_USE_DEDUCING_THIS
    AND NOT COMPILER_SUPPORTS_DEDUCING_THIS)
   message(
     WARNING
-      "Building with  C++23 "deducing this" feature (P0847R7) despite of the compiler's lack of actual support for it."
+      "Building with  C++23 \"deducing this\" feature (P0847R7) despite of the compiler's lack of actual support for it."
   )
 endif()
 
