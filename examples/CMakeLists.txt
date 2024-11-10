@@ -8,17 +8,19 @@ set(EXAMPLES sample)
 
 foreach(example ${EXAMPLES})
   # Add example executable.
-  add_executable(${example} "")
+  add_executable(beman.iterator_interface.examples.${example} "")
 
   # Add example source file.
-  target_sources(${example} PRIVATE ${example}.cpp)
+  target_sources(beman.iterator_interface.examples.${example}
+                 PRIVATE ${example}.cpp)
 
   # Link example with the library.
-  target_link_libraries(${example} beman::iterator_interface)
+  target_link_libraries(beman.iterator_interface.examples.${example}
+                        beman::iterator_interface)
 
   # Install.
   install(
-    TARGETS ${example}
-    COMPONENT beman_iterator_interface_examples
+    TARGETS beman.iterator_interface.examples.${example}
+    COMPONENT beman.iterator_interface.examples
     DESTINATION ${CMAKE_INSTALL_BINDIR})
 endforeach()

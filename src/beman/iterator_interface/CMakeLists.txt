@@ -10,7 +10,7 @@ target_sources(beman.iterator_interface PUBLIC iterator_interface.cpp)
 install(
   TARGETS beman.iterator_interface
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-          COMPONENT beman_iterator_interface_library
+          COMPONENT beman.iterator_interface.library
           EXCLUDE_FROM_ALL)
 
 install(
