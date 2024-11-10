@@ -16,7 +16,7 @@ target_sources(
   PRIVATE FILE_SET beman_iterator_interface_test_headers TYPE HEADERS)
 
 target_link_libraries(
-  beman_iterator_interface_test PRIVATE beman_iterator_interface GTest::gtest
+  beman_iterator_interface_test PRIVATE beman::iterator_interface GTest::gtest
                                         GTest::gtest_main)
 
 # Issue #32: Re-enable ASAN run CI/clang-19.

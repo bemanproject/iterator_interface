@@ -56,6 +56,8 @@ endif()
 
 # Create the library target and named header set for beman_iterator_interface
 add_library(beman_iterator_interface STATIC)
+add_library(beman::iterator_interface ALIAS beman_iterator_interface)
+
 target_sources(
   beman_iterator_interface
   PUBLIC FILE_SET
