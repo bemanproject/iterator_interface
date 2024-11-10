@@ -66,8 +66,15 @@ target_sources(
          HEADERS
          BASE_DIRS
          src
-         include
-         "${PROJECT_BINARY_DIR}/include/")
+         include)
+
+target_include_directories(
+  beman.iterator_interface
+  PUBLIC
+    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${CMAKE_LOWER_PROJECT_NAME}>
+)
 
 add_subdirectory(src/beman/iterator_interface)
 add_subdirectory(include/beman/iterator_interface)
