@@ -4,7 +4,7 @@
 # cmake-format: on
 
 target_sources(
-  beman_iterator_interface
+  beman.iterator_interface
   PUBLIC FILE_SET
          beman_iterator_interface_headers
          TYPE

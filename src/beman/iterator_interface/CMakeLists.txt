@@ -4,16 +4,16 @@
 # cmake-format: on
 
 # Ensure that iterator_interface gets compiled at least once.
-target_sources(beman_iterator_interface PUBLIC iterator_interface.cpp)
+target_sources(beman.iterator_interface PUBLIC iterator_interface.cpp)
 
 # The library is empty -- exclude it
 install(
-  TARGETS beman_iterator_interface
+  TARGETS beman.iterator_interface
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
           COMPONENT beman_iterator_interface_library
           EXCLUDE_FROM_ALL)
 
 install(
-  TARGETS beman_iterator_interface FILE_SET beman_iterator_interface_headers
+  TARGETS beman.iterator_interface FILE_SET beman_iterator_interface_headers
   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
   COMPONENT beman_iterator_interface_development)

@@ -6,7 +6,7 @@
 cmake_minimum_required(VERSION 3.27)
 
 project(
-  beman_iterator_interface
+  beman.iterator_interface
   VERSION 0.0.0
   LANGUAGES CXX)
 
@@ -54,12 +54,12 @@ if(ITERATOR_INTERFACE_ENABLE_TESTING)
   FetchContent_MakeAvailable(googletest)
 endif()
 
-# Create the library target and named header set for beman_iterator_interface
-add_library(beman_iterator_interface STATIC)
-add_library(beman::iterator_interface ALIAS beman_iterator_interface)
+# Create the library target and named header set for beman.iterator_interface
+add_library(beman.iterator_interface STATIC)
+add_library(beman::iterator_interface ALIAS beman.iterator_interface)
 
 target_sources(
-  beman_iterator_interface
+  beman.iterator_interface
   PUBLIC FILE_SET
          beman_iterator_interface_headers
          TYPE
