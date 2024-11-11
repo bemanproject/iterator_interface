@@ -1,8 +1,8 @@
-# beman.iterator\_interface: iterator creation mechanisms
-
 <!--
 SPDX-License-Identifier: 2.0 license with LLVM exceptions
 -->
+
+# beman.iterator\_interface: iterator creation mechanisms
 
 **Implements**:
 * [`std::iterator_interface` (P2727)](https://wg21.link/P2727)
