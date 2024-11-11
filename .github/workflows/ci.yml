@@ -16,6 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
+          - {name: "Ubuntu Clang 20", os: ubuntu-24.04, toolchain: "clang-20", clang_version: 20, installed_clang_version: 17, cmake_args: "-G \"Ninja Multi-Config\" -DCMAKE_CONFIGURATION_TYPES=\"RelWithDebInfo;Asan\" "}
           # Note: clang-19 + Asan setup causes errors on some platforms. Temporary skip some checks via .asan_options.
           - {name: "Ubuntu Clang 19", os: ubuntu-24.04, toolchain: "clang-19", clang_version: 19, installed_clang_version: 17, cmake_args: "-G \"Ninja Multi-Config\" -DCMAKE_CONFIGURATION_TYPES=\"RelWithDebInfo;Asan\" ", asan_options: "new_delete_type_mismatch=0"}
           - {name: "Ubuntu Clang 18", os: ubuntu-24.04, toolchain: "clang-18", clang_version: 18, installed_clang_version: 17, cmake_args: "-G \"Ninja Multi-Config\" -DCMAKE_CONFIGURATION_TYPES=\"RelWithDebInfo;Asan\" "}

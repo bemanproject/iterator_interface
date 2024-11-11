@@ -4,6 +4,8 @@ SPDX-License-Identifier: 2.0 license with LLVM exceptions
 
 # beman.iterator\_interface: iterator creation mechanisms
 
+![CI Tests](https://github.com/beman-project/iterator_interface/actions/workflows/ci.yml/badge.svg)
+
 **Implements**:
 * [`std::iterator_interface` (P2727)](https://wg21.link/P2727)
 
