@@ -1,3 +1,6 @@
+# .github/workflows/ci.yml -*-yaml-*-
+# SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+
 name: CI Tests
 on:
   workflow_dispatch:

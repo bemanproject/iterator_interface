@@ -1,14 +1,16 @@
-# Beman.iterator Examples
-
 <!--
 SPDX-License-Identifier: 2.0 license with LLVM exceptions
 -->
 
-List of usage examples for `Beman.iterator`.
+# beman.iterator_interfaces: Examples
+
+List of usage examples for `beman.iterator_interfaces`.
 
 ## Sample
 
-Check [sample](sample.cpp) for basic `Beman.iterator` library usage.
+TODO: update examples.
+
+Check [sample](sample.cpp) for basic `beman.iterator_interfaces` library usage.
 
 Build and run instructions:
 ```shell
