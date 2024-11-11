@@ -46,6 +46,13 @@
       "toolchainFile": "${sourceDir}/etc/gcc-12-toolchain.cmake"
     },
     {
+      "name": "clang-20",
+      "inherits": "common",
+      "displayName": "Clang 20",
+      "description": "Build with Clang 20 compilers",
+      "toolchainFile": "${sourceDir}/etc/clang-20-toolchain.cmake"
+    },
+    {
       "name": "clang-19",
       "inherits": "common",
       "displayName": "Clang 19",
@@ -92,6 +99,11 @@
       "name": "gcc-12",
       "inherits": "common",
       "configurePreset": "gcc-12"
+    },
+    {
+      "name": "clang-20",
+      "inherits": "common",
+      "configurePreset": "clang-20"
     },
     {
       "name": "clang-19",
@@ -141,6 +153,11 @@
       "name": "gcc-12",
       "inherits": "common",
       "configurePreset": "gcc-12"
+    },
+    {
+      "name": "clang-20",
+      "inherits": "common",
+      "configurePreset": "clang-20"
     },
     {
       "name": "clang-19",
@@ -224,6 +241,23 @@
         {
           "type": "test",
           "name": "gcc-12"
+        }
+      ]
+    },
+    {
+      "name": "clang-20",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "clang-20"
+        },
+        {
+          "type": "build",
+          "name": "clang-20"
+        },
+        {
+          "type": "test",
+          "name": "clang-20"
         }
       ]
     },
