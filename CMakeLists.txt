@@ -24,8 +24,8 @@ beman_iterator_check_deducing_this(COMPILER_SUPPORTS_DEDUCING_THIS)
 set(TARGETS_EXPORT_NAME ${CMAKE_PROJECT_NAME}Targets)
 
 option(BEMAN_ITERATOR_INTERFACE_USE_DEDUCING_THIS
-       "Make use of C++23 \"deducing this\" feature (P0847R7). Turn this off for non-conforming compilers."
-       ${COMPILER_SUPPORTS_DEDUCING_THIS})
+  "Make use of C++23 \"deducing this\" feature (P0847R7). Turn this off for non-conforming compilers."
+  ${COMPILER_SUPPORTS_DEDUCING_THIS})
 
 option(ITERATOR_INTERFACE_ENABLE_TESTING
        "Enable building tests and test infrastructure" ${PROJECT_IS_TOP_LEVEL})
@@ -93,3 +93,6 @@ add_custom_target(
   COMMENT "Running gcovr to process coverage results"
   COMMAND mkdir -p coverage
   COMMAND gcovr --config gcovr.cfg .)
+
+install(FILES ${PROJECT_BINARY_DIR}/include/beman/iterator_interface/config.hpp
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/beman/iterator_interface)
