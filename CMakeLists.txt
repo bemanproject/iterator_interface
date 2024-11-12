@@ -81,7 +81,7 @@ add_subdirectory(include/beman/iterator_interface)
 
 add_subdirectory(examples)
 if(ITERATOR_INTERFACE_ENABLE_TESTING)
-  add_subdirectory(tests)
+  add_subdirectory(tests/beman/iterator_interface)
 endif()
 
 # Coverage
