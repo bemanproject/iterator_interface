@@ -17,7 +17,7 @@ function(beman_iterator_check_deducing_this result_var)
 #else
   #if defined(_MSC_VER) && (_MSC_VER >= 1932)
   #elif defined(__clang__)
-    #if __has_extension(cxx_explicit_this_parameter))
+    #if __has_extension(cxx_explicit_this_parameter)
     #else
       #error No deducing this support
     #endif
