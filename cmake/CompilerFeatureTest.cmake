@@ -12,7 +12,8 @@ include(CheckCXXSourceCompiles)
 function(beman_iterator_check_deducing_this result_var)
   check_cxx_source_compiles( "
 // clang-specific check due to http://github.com/llvm/llvm-project/issues/113174
-#if defined(__cpp_explicit_this_parameter) || (defined(__clang__) && __has_extension(cxx_explicit_this_parameter))
+// MSVC-specific check due to https://developercommunity.visualstudio.com/t/10107077
+#if defined(__cpp_explicit_this_parameter) || (defined(__clang__) && __has_extension(cxx_explicit_this_parameter)) || (defined(_MSC_VER) && _MSC_VER >= 1932)
 #else
 #error No deducing this support
 #endif
