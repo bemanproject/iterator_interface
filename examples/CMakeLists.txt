@@ -4,7 +4,7 @@
 # cmake-format: on
 
 # List of all buildable examples.
-set(EXAMPLES sample)
+set(EXAMPLES repeated_chars_iterator)
 
 foreach(example ${EXAMPLES})
   # Add example executable.
