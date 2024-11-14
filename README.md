@@ -17,7 +17,7 @@ Documentation and associated papers are licensed with the Creative Commons Attri
 
 // SPDX-License-Identifier: CC-BY-4.0
 
-The intent is that the source and documentation are available for use by people implementing their own optional types as well as people using the optional presented here as-is.
+The intent is that the source and documentation are available for use by people implementing their iterator types as well as people using the iterator_interface presented here as-is.
 
 The README itself is licesed with CC0 1.0 Universal. Copy the contents and incorporate in your own work as you see fit.
 
@@ -103,6 +103,14 @@ This project strives to be as normal and simple a CMake project as possible. Thi
 work, producing a static `beman.iterator_interface` library, ready to package:
 
 ```shell
+$ cmake --workflow --preset gcc-14
+$ cmake --install .build/gcc-14 --prefix /opt/beman.iterator_interface
+```
+
+<details>
+<summary> Build beman.iterator_interface (verbose logs) </summary>
+
+```shell
 $ cmake --workflow --list-presets
 Available workflow presets:
   "system"
@@ -115,7 +123,6 @@ Available workflow presets:
   "clang-17"
   "clang-16
 
-# Run examples:
 $ cmake --workflow --preset gcc-14
 Executing workflow step 1 of 3: configure preset "gcc-14"
 ...
@@ -145,11 +152,47 @@ Total Test time (real) =   0.09 sec
 
 This should build and run the tests with GCC 14 with the address and undefined behavior sanitizers enabled.
 
+</details>
+
+
+<details>
+<summary> Install beman.iterator_interface (verbose logs) </summary>
+
+```shell
+# Install build artifacts from `build` directory into `/opt/beman.iterator_interface` path.
+$ cmake --install .build/gcc-14 --prefix /opt/beman.iterator_interface
+TODO
+
+
+# Check tree.
+$ tree /opt/beman.iterator_interface
+TODO
+```
+
+</details>
+
 #### Custom CMake Flows
 
 ##### Default Build
 
 CI current build and test flows:
+```shell
+# Configure.
+$ cmake -G "Ninja Multi-Config" \
+      -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Asan" \
+      -DCMAKE_TOOLCHAIN_FILE=etc/clang-19-toolchain.cmake \
+      -B .build -S .
+
+# Build.
+$ cmake --build .build --config Asan --target all -- -k 0
+
+# Run tests.
+$ ctest --build-config Asan --output-on-failure --test-dir .build
+
+```
+
+<details>
+<summary> Build beman.iterator_interface and tests (verbose logs) </summary>
 
 ```shell
 # Configure build: default build production code + tests (BEMAN_ITERATOR_INTERFACE_BUILD_TESTING=ON).
@@ -175,10 +218,26 @@ Test project /path/to/repo/.build
 
 Total Test time (real) =   0.67 sec
 ```
+</details>
 
 ##### Build Production, but Skip Tests
 
 By default, we build and run tests. You can provide `-DBEMAN_ITERATOR_INTERFACE_BUILD_TESTING=OFF` and completely disable building tests:
+
+```shell
+# Configure.
+$ cmake -G "Ninja Multi-Config" \
+      -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Asan" \
+      -DCMAKE_TOOLCHAIN_FILE=etc/clang-19-toolchain.cmake \
+      -DBEMAN_ITERATOR_INTERFACE_BUILD_TESTING=OFF \
+      -B .build -S .
+
+# Build (similar).
+cmake --build .build --config Asan --target all -- -k 0
+```
+
+<details>
+<summary> Build beman.iterator_interface only - NO tests (verbose logs) </summary>
 
 ```shell
 # Configure build: build production code, skip tests (BEMAN_ITERATOR_INTERFACE_BUILD_TESTING=OFF).
@@ -202,3 +261,5 @@ Internal ctest changing into directory: /path/to/beman/repo/.build
 Test project /path/to/beman/repo/.build
 No tests were found!!!
 ```
+
+</details>
