@@ -57,7 +57,7 @@ int main() {
     std::string extracted_result;
     std::copy(it_first, it_last, std::back_inserter(extracted_result));
     assert(extracted_result.size() == len);
-    std::cout << extracted_result << "\n";                                // Expected output at STDOUT: "foofoof"
+    std::cout << extracted_result << "\n";                               // Expected output at STDOUT: "foofoof"
 
     return 0;
 }

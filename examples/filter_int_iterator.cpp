@@ -55,8 +55,8 @@ struct filtered_int_iterator
 };
 
 int main() {
-    // Create a filtered_int_iterator that iterates over the sequence {1, 2, 3, 4, 10, 11, 101, 200, 0}, skipping odd numbers.
-    // 0 is not skipped, so it will be the last element in the sequence.
+    // Create a filtered_int_iterator that iterates over the sequence {1, 2, 3, 4, 10, 11, 101, 200, 0},
+    // skipping odd numbers. 0 is not skipped, so it will be the last element in the sequence.
     std::array a = {1, 2, 3, 4, 10, 11, 101, 200, 0};
     filtered_int_iterator it{std::begin(a), std::end(a), [](int i) { return i % 2 == 0; }};
 

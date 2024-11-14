@@ -25,22 +25,43 @@ The README itself is licesed with CC0 1.0 Universal. Copy the contents and incor
 
 ## Examples
 
-Full runable examples can be found in `examples/` - please check [./examples/README.md](./examples/README.md).
+Full runable examples can be found in `examples/` - please check [./examples/README.md](./examples/README.md) for building the code on local setup or on Compiler Explorer.
 
-### TODO - first example
+### Repetead Chars Iterator
 
-The next code snippet shows iterator interface support added in [`std::iterator_interface` (P2727R4)](https://wg21.link/P2727R4):
+The next code snippet shows iterator interface support added in [`std::iterator_interface` (P2727R)](https://wg21.link/P2727R4): define a random access iterator that iterates over a sequence of characters repeated indefinitely.
 
 ```cpp
-TODO
+// Create a repeated_chars_iterator that iterates over the sequence "foo" repeated indefinitely:
+// "foofoofoofoofoofoo...". Will actually extract a prefix of the sequence and insert it into a std::string.
+constexpr const std::string_view target = "foo";
+constexpr const auto len = 7;                                        // Number of extracted characters from the sequence.
+
+// Create iterators that iterate over the sequence "foofoofoofoofoofoo...".
+repeated_chars_iterator it_first(target.data(), target.size(), 0);   // target.size() == 3 is the length of "foo", 0 is this iterator's position.
+repeated_chars_iterator it_last(target.data(), target.size(), len);  // Same as above, but now the iterator's position is 7.
+
+std::string extracted_result;
+std::copy(it_first, it_last, std::back_inserter(extracted_result));
+assert(extracted_result.size() == len);
+std::cout << extracted_result << "\n";                               // Expected output at STDOUT: "foofoof"
 ```
 
-### TODO - second example
+### Filter Integer Iterator
 
-The next code snippet shows iterator interface support added in [`std::iterator_interface` (P2727R4)](https://wg21.link/P2727R4):
+The next code snippet shows iterator interface support added in [`std::iterator_interface` (P2727R4)](https://wg21.link/P2727R4): define a forward iterator that iterates over a sequence of integers, skipping those that do not satisfy a predicate.
 
 ```cpp
-TODO
+// Create a filtered_int_iterator that iterates over the sequence {1, 2, 3, 4, 10, 11, 101, 200, 0},
+// skipping odd numbers. 0 is not skipped, so it will be the last element in the sequence.
+std::array a = {1, 2, 3, 4, 10, 11, 101, 200, 0};
+filtered_int_iterator it{std::begin(a), std::end(a), [](int i) { return i % 2 == 0; }};
+
+while (*it) {
+    std::cout << *it << " ";
+    ++it;
+}
+std::cout << "\n";
 ```
 
 ## How to Build
@@ -69,9 +90,9 @@ Example of installation on `Ubuntu 24.04`:
 apt-get install -y cmake make ninja-build
 
 # Example of toolchains:
-apt-get install                           \
-  g++-14 gcc-14 gcc-13 g++-14             \
-  clang-18 clang++-18 clang-17 clang++-17
+apt-get install                             \
+    g++-14 gcc-14 gcc-13 g++-14             \
+    clang-18 clang++-18 clang-17 clang++-17
 ```
 
 ### Instructions
