@@ -142,21 +142,17 @@ struct iter_cat<IteratorConcept, ReferenceType, false> {};
 
 template <typename IteratorConcept, typename ReferenceType>
 struct iter_cat<IteratorConcept, ReferenceType, true> {
-private:
-    static constexpr auto compute_category_tag() {
-        if constexpr (!std::is_reference_v<ReferenceType>) {
-            return std::input_iterator_tag{};
-        } else if constexpr (std::is_base_of_v<std::random_access_iterator_tag, IteratorConcept>) {
-            return std::random_access_iterator_tag{};
-        } else if constexpr (std::is_base_of_v<std::bidirectional_iterator_tag, IteratorConcept>) {
-            return std::bidirectional_iterator_tag{};
-        } else {
-            return std::forward_iterator_tag{};
-        }
-    }
-
-public:
-    using iterator_category = std::invoke_result_t<decltype(compute_category_tag)>;
+    using iterator_category =
+        std::conditional_t<
+            !std::is_reference_v<ReferenceType>,
+            std::input_iterator_tag,
+            std::conditional_t<
+                std::is_base_of_v<std::random_access_iterator_tag, IteratorConcept>,
+                std::random_access_iterator_tag,
+                std::conditional_t<
+                    std::is_base_of_v<std::bidirectional_iterator_tag, IteratorConcept>,
+                    std::bidirectional_iterator_tag,
+                    std::forward_iterator_tag>>>;
 };
 
 } // namespace detail
