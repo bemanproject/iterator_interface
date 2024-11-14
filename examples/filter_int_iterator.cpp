@@ -1,7 +1,8 @@
 // examples/filter_int_iterator.cpp -*-C++-*-
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-// P2727R4 example: An iterator that allows filtering int elements of a sequence.
+// [P2727](https://wg21.link/P2727) example:
+// An iterator that allows filtering int elements of a sequence.
 #include <beman/iterator_interface/iterator_interface.hpp>
 
 #include <algorithm>

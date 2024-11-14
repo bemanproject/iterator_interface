@@ -1,22 +1,29 @@
+# Examples for beman.iterator_interface
+
 <!--
 SPDX-License-Identifier: 2.0 license with LLVM exceptions
 -->
 
-# beman.iterator_interfaces: Examples
+List of usage examples for `beman.iterator_interface`.
 
-List of usage examples for `beman.iterator_interfaces`.
+## Examples
 
-## Sample
+Check basic `beman.iterator_interface` library usages:
 
-TODO: update examples.
+* [P2727](https://wg21.link/P2727): local [./repeated_chars_iterator.cpp](./repeated_chars_iterator.cpp) or [repeated_chars_iterator.cpp@Compiler Explorer](TODO)
+* [P2727](https://wg21.link/P2727): local [./filter_int_iterator.cpp](./filter_int_iterator.cpp) or [filter_int_iterator.cpp@Compiler Explorer](TODO)
 
-Check [sample](sample.cpp) for basic `beman.iterator_interfaces` library usage.
+## Local Build and Run
 
-Build and run instructions:
 ```shell
 # build
-$ cmake --workflow --preset gcc-14
+$ cmake --workflow --preset gcc-14 # or choose one from --list-presets
 
-# run sample
-$ .build/gcc-14/examples/RelWithDebInfo/sample
+# run repeated_chars_iterator.cpp
+$ .build/gcc-14/examples/Asan/beman.iterator_interface.examples.repeated_chars_iterator 
+foofoof
+
+# run filter_int_iterator.cpp
+$ .build/gcc-14/examples/Asan/beman.iterator_interface.examples.filter_int_iterator
+2 4 10 200
 ```

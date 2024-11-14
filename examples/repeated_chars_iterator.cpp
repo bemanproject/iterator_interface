@@ -1,7 +1,8 @@
 // examples/repeated_chars_iterator.cpp -*-C++-*-
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-// P2727R4 example: An iterator that allows iterating over repetitions of a sequence of characters.
+// [P2727](https://wg21.link/P2727) example:
+// An iterator that allows iterating over repetitions of a sequence of characters.
 #include <beman/iterator_interface/iterator_interface.hpp>
 
 #include <algorithm>
