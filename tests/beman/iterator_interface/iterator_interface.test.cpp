@@ -7,6 +7,7 @@
 #include <gtest/gtest.h>
 
 #include <algorithm>
+#include <iterator>
 #include <ranges>
 
 namespace beman {
@@ -118,6 +119,35 @@ TEST(IteratorTest, OperatorArrow) {
     AlwaysIterator ai;
     ASSERT_EQ(ai->f(), 3);
 }
+
+struct dummy_input_iterator :
+    public ext_iterator_interface_compat<
+      dummy_input_iterator, std::input_iterator_tag, int, int const&, void, std::ptrdiff_t> {
+  constexpr dummy_input_iterator() { }
+  dummy_input_iterator(dummy_input_iterator const&) = delete;
+  dummy_input_iterator& operator=(dummy_input_iterator const&) = delete;
+  dummy_input_iterator(dummy_input_iterator&&) = default;
+  dummy_input_iterator& operator=(dummy_input_iterator&&) = default;
+  constexpr reference operator*() const {
+    return foo;
+  }
+  constexpr dummy_input_iterator& operator++() {
+    return *this;
+  }
+  constexpr void operator++(int) {}
+
+  friend constexpr bool operator==(std::default_sentinel_t const&,
+                                   dummy_input_iterator const&) {
+    return true;
+  }
+
+  friend beman::iterator_interface::iterator_interface_access;
+
+  int foo = 0;
+};
+
+static_assert(std::input_iterator<dummy_input_iterator>);
+static_assert(!std::forward_iterator<dummy_input_iterator>);
 
 } // namespace iterator_interface
 } // namespace beman

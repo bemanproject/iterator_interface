@@ -142,6 +142,7 @@ struct iter_cat<IteratorConcept, ReferenceType, false> {};
 
 template <typename IteratorConcept, typename ReferenceType>
 struct iter_cat<IteratorConcept, ReferenceType, true> {
+private:
     static constexpr auto compute_category_tag() {
         if constexpr (!std::is_reference_v<ReferenceType>) {
             return std::input_iterator_tag{};
@@ -154,19 +155,18 @@ struct iter_cat<IteratorConcept, ReferenceType, true> {
         }
     }
 
-    using TagType           = std::invoke_result_t<decltype(compute_category_tag)>;
-    using iterator_category = TagType;
+public:
+    using iterator_category = std::invoke_result_t<decltype(compute_category_tag)>;
 };
 
 } // namespace detail
 
 template <class IteratorConcept, class ValueType, class Reference, class Pointer, class DifferenceType>
-class iterator_interface {
+class iterator_interface
+    : detail::iter_cat<IteratorConcept, Reference, std::derived_from<IteratorConcept, std::forward_iterator_tag>>
+{
   public:
     using iterator_concept = IteratorConcept;
-    using iterator_category =
-        detail::iter_cat<IteratorConcept, Reference, std::derived_from<IteratorConcept, std::forward_iterator_tag>>::
-            iterator_category;
     using value_type      = remove_const_t<ValueType>;
     using reference       = Reference;
     using pointer         = conditional_t<is_same_v<iterator_concept, output_iterator_tag>, void, Pointer>;
