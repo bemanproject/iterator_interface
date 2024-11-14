@@ -20,7 +20,7 @@ public:
     // Default constructor creates an end-of-range iterator.
     constexpr repeated_chars_iterator() : m_it_begin(nullptr), m_fixed_size(0), m_pos(0) {}
     
-    // Constructor for the beginning of the range.
+    // Constructor for the beginning of the sequence.
     constexpr repeated_chars_iterator(const char* it_begin, difference_type size, difference_type n)
         : m_it_begin(it_begin), m_fixed_size(size), m_pos(n) {}
 
