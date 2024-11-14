@@ -27,8 +27,11 @@ option(BEMAN_ITERATOR_INTERFACE_USE_DEDUCING_THIS
   "Make use of C++23 \"deducing this\" feature (P0847R7). Turn this off for non-conforming compilers."
   ${COMPILER_SUPPORTS_DEDUCING_THIS})
 
-option(ITERATOR_INTERFACE_ENABLE_TESTING
-       "Enable building tests and test infrastructure" ${PROJECT_IS_TOP_LEVEL})
+option(BEMAN_ITERATOR_INTERFACE_BUILD_TESTING
+       "Enable building tests and test infrastructure. Default: ON. Values: {ON, OFF}." ${PROJECT_IS_TOP_LEVEL})
+
+option(BEMAN_ITERATOR_INTERFACE_BUILD_EXAMPLES
+       "Enable building examples. Default: ON. Values: {ON, OFF}." ${PROJECT_IS_TOP_LEVEL})
 
 if(BEMAN_ITERATOR_INTERFACE_USE_DEDUCING_THIS
    AND NOT COMPILER_SUPPORTS_DEDUCING_THIS)
@@ -42,8 +45,7 @@ configure_file(
   "${PROJECT_SOURCE_DIR}/include/beman/iterator_interface/config.hpp.in"
   "${PROJECT_BINARY_DIR}/include/beman/iterator_interface/config.hpp" @ONLY)
 
-# Build the tests if enabled via the option ITERATOR_INTERFACE_ENABLE_TESTING
-if(ITERATOR_INTERFACE_ENABLE_TESTING)
+if(BEMAN_ITERATOR_INTERFACE_BUILD_TESTING)
   # Fetch GoogleTest
   FetchContent_Declare(
     googletest
@@ -79,9 +81,12 @@ target_include_directories(
 add_subdirectory(src/beman/iterator_interface)
 add_subdirectory(include/beman/iterator_interface)
 
-add_subdirectory(examples)
-if(ITERATOR_INTERFACE_ENABLE_TESTING)
+if(BEMAN_ITERATOR_INTERFACE_BUILD_TESTING)
   add_subdirectory(tests/beman/iterator_interface)
+endif()
+
+if(BEMAN_ITERATOR_INTERFACE_BUILD_EXAMPLES)
+  add_subdirectory(examples)
 endif()
 
 # Coverage
