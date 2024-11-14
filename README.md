@@ -103,38 +103,136 @@ This project strives to be as normal and simple a CMake project as possible. Thi
 work, producing a static `beman.iterator_interface` library, ready to package:
 
 ```shell
-$ cmake --workflow --preset gcc-14
-$ cmake --install .build/gcc-14 --prefix /opt/beman.iterator_interface
+$ cmake --workflow --preset gcc-debug
+$ cmake --workflow --preset gcc-release
+$ cmake --install .build/gcc-release --prefix /opt/beman.iterator_interface
+
+$ tree /opt/beman.iterator_interface
+├── bin      # examples (check: BEMAN_ITERATOR_INTERFACE_BUILD_EXAMPLES - default: ON)
+│   ├── beman.iterator_interface.examples.filter_int_iterator
+│   └── beman.iterator_interface.examples.repeated_chars_iterator
+├── include  # public API
+│   └── beman
+│       └── iterator_interface
+│           ├── config.hpp
+│           ├── detail
+│           │   └── stl_interfaces
+│           │       ├── config.hpp
+│           │       ├── fwd.hpp
+│           │       └── iterator_interface.hpp
+│           ├── iterator_interface.hpp
+│           └── iterator_interface_access.hpp
+└── lib     # actual library implementation
+    └── libbeman.iterator_interface.a
+
+8 directories, 9 files
 ```
 
 <details>
-<summary> Build beman.iterator_interface (verbose logs) </summary>
+<summary> Build beman.iterator_interface (verbose logs - gcc-debug) </summary>
+
+
+This should build and run the tests with system GCC with the address and undefined behavior sanitizers enabled.
 
 ```shell
-$ cmake --workflow --list-presets
-Available workflow presets:
-  "system"
-  "gcc-14"
-  "gcc-13"
-  "gcc-12"
-  "clang-20"
-  "clang-19"
-  "clang-18"
-  "clang-17"
-  "clang-16
+$ cmake --workflow --preset gcc-debug
+Executing workflow step 1 of 3: configure preset "gcc-debug"
 
-$ cmake --workflow --preset gcc-14
-Executing workflow step 1 of 3: configure preset "gcc-14"
-...
--- Build files have been written to: /path/to/repo/.build/gcc-14
+Preset CMake variables:
 
-Executing workflow step 2 of 3: build preset "gcc-14"
+  CMAKE_BUILD_TYPE="Debug"
+  CMAKE_CXX_COMPILER="g++"
+  CMAKE_CXX_FLAGS="-fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract -fsanitize=leak -fsanitize=undefined"
+  CMAKE_CXX_STANDARD="17"
 
-ninja: no work to do.
+-- The CXX compiler identification is GNU 13.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/g++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test HAVE_DEDUCING_THIS
+-- Performing Test HAVE_DEDUCING_THIS - Failed
+-- The C compiler identification is GNU 13.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Configuring done (2.7s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/dariusn/git/Beman/iterator_interface/.build/gcc-debug
 
-Executing workflow step 3 of 3: test preset "gcc-14"
+Executing workflow step 2 of 3: build preset "gcc-debug"
 
-Test project /home/dariusn/git/Beman/iterator_interface/.build/gcc-14
+[15/15] Linking CXX executable tests/beman/iterator_interface/beman.iterator_interface.tests
+
+Executing workflow step 3 of 3: test preset "gcc-debug"
+
+Test project /home/dariusn/git/Beman/iterator_interface/.build/gcc-debug
+    Start 1: IteratorTest.TestGTest
+1/4 Test #1: IteratorTest.TestGTest ...........   Passed    0.01 sec
+    Start 2: IteratorTest.TestRepeatedChars
+2/4 Test #2: IteratorTest.TestRepeatedChars ...   Passed    0.01 sec
+    Start 3: IteratorTest.TestFilteredIter
+3/4 Test #3: IteratorTest.TestFilteredIter ....   Passed    0.01 sec
+    Start 4: IteratorTest.OperatorArrow
+4/4 Test #4: IteratorTest.OperatorArrow .......   Passed    0.01 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) =   0.04 sec
+```
+
+</details>
+
+
+<details>
+<summary> Install beman.iterator_interface (verbose logs - gcc-release) </summary>
+
+```shell
+# Build release.
+$ cmake --workflow --preset gcc-release
+Executing workflow step 1 of 3: configure preset "gcc-release"
+
+Preset CMake variables:
+
+  CMAKE_BUILD_TYPE="RelWithDebInfo"
+  CMAKE_CXX_COMPILER="g++"
+  CMAKE_CXX_FLAGS="-O3"
+  CMAKE_CXX_STANDARD="17"
+
+-- The CXX compiler identification is GNU 13.2.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/g++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Performing Test HAVE_DEDUCING_THIS
+-- Performing Test HAVE_DEDUCING_THIS - Failed
+-- The C compiler identification is GNU 13.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Configuring done (2.7s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/dariusn/git/Beman/iterator_interface/.build/gcc-release
+
+Executing workflow step 2 of 3: build preset "gcc-release"
+
+[15/15] Linking CXX executable tests/beman/iterator_interface/beman.iterator_interface.tests
+
+Executing workflow step 3 of 3: test preset "gcc-release"
+
+Test project /home/dariusn/git/Beman/iterator_interface/.build/gcc-release
     Start 1: IteratorTest.TestGTest
 1/4 Test #1: IteratorTest.TestGTest ...........   Passed    0.00 sec
     Start 2: IteratorTest.TestRepeatedChars
@@ -143,30 +241,45 @@ Test project /home/dariusn/git/Beman/iterator_interface/.build/gcc-14
 3/4 Test #3: IteratorTest.TestFilteredIter ....   Passed    0.00 sec
     Start 4: IteratorTest.OperatorArrow
 4/4 Test #4: IteratorTest.OperatorArrow .......   Passed    0.00 sec
-...
 
-100% tests passed, 0 tests failed out of ...
+100% tests passed, 0 tests failed out of 4
 
-Total Test time (real) =   0.09 sec
-```
-
-This should build and run the tests with GCC 14 with the address and undefined behavior sanitizers enabled.
-
-</details>
-
-
-<details>
-<summary> Install beman.iterator_interface (verbose logs) </summary>
-
-```shell
 # Install build artifacts from `build` directory into `/opt/beman.iterator_interface` path.
-$ cmake --install .build/gcc-14 --prefix /opt/beman.iterator_interface
-TODO
+$ cmake --install .build/gcc-release --prefix /opt/beman.iterator_interface
+-- Install configuration: "RelWithDebInfo"
+-- Installing: /opt/beman.iterator_interface/lib/libbeman.iterator_interface.a
+-- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/iterator_interface.hpp
+-- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/iterator_interface_access.hpp
+-- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/detail/stl_interfaces/config.hpp
+-- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/detail/stl_interfaces/fwd.hpp
+-- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/detail/stl_interfaces/iterator_interface.hpp
+-- Installing: /opt/beman.iterator_interface/bin/beman.iterator_interface.examples.filter_int_iterator
+-- Installing: /opt/beman.iterator_interface/bin/beman.iterator_interface.examples.repeated_chars_iterator
+-- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/config.hpp
 
 
 # Check tree.
 $ tree /opt/beman.iterator_interface
-TODO
+/opt/beman.iterator_interface
+├── bin
+│   ├── beman.iterator_interface.examples.filter_int_iterator
+│   └── beman.iterator_interface.examples.repeated_chars_iterator
+├── include
+│   └── beman
+│       └── iterator_interface
+│           ├── config.hpp
+│           ├── detail
+│           │   └── stl_interfaces
+│           │       ├── config.hpp
+│           │       ├── fwd.hpp
+│           │       └── iterator_interface.hpp
+│           ├── iterator_interface.hpp
+│           └── iterator_interface_access.hpp
+└── lib
+    └── libbeman.iterator_interface.a
+
+8 directories, 9 files
+
 ```
 
 </details>
@@ -183,12 +296,46 @@ $ cmake -G "Ninja Multi-Config" \
       -DCMAKE_TOOLCHAIN_FILE=etc/clang-19-toolchain.cmake \
       -B .build -S .
 
-# Build.
+# Build with config Asan.
 $ cmake --build .build --config Asan --target all -- -k 0
+# Build with config RelWithDebInfo.
+$ cmake --build .build --config RelWithDebInfo  --target all -- -k 0
 
-# Run tests.
+# Run tests with config Asan..
 $ ctest --build-config Asan --output-on-failure --test-dir .build
 
+# Install library (default: config set to RelWithDebInfo).
+$ cmake --install .build/ --prefix /opt/beman.iterator_interface
+-- Install configuration: "RelWithDebInfo"
+-- Installing: /opt/beman.iterator_interface/lib/libbeman.iterator_interface.a
+-- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/iterator_interface.hpp
+-- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/iterator_interface_access.hpp
+-- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/detail/stl_interfaces/config.hpp
+-- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/detail/stl_interfaces/fwd.hpp
+-- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/detail/stl_interfaces/iterator_interface.hpp
+-- Installing: /opt/beman.iterator_interface/bin/beman.iterator_interface.examples.filter_int_iterator
+-- Installing: /opt/beman.iterator_interface/bin/beman.iterator_interface.examples.repeated_chars_iterator
+-- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/config.hpp
+$ tree /opt/beman.iterator_interface
+/opt/beman.iterator_interface
+├── bin
+│   ├── beman.iterator_interface.examples.filter_int_iterator
+│   └── beman.iterator_interface.examples.repeated_chars_iterator
+├── include
+│   └── beman
+│       └── iterator_interface
+│           ├── config.hpp
+│           ├── detail
+│           │   └── stl_interfaces
+│           │       ├── config.hpp
+│           │       ├── fwd.hpp
+│           │       └── iterator_interface.hpp
+│           ├── iterator_interface.hpp
+│           └── iterator_interface_access.hpp
+└── lib
+    └── libbeman.iterator_interface.a
+
+8 directories, 9 files
 ```
 
 <details>
@@ -220,7 +367,7 @@ Total Test time (real) =   0.67 sec
 ```
 </details>
 
-##### Build Production, but Skip Tests
+##### Skip Tests
 
 By default, we build and run tests. You can provide `-DBEMAN_ITERATOR_INTERFACE_BUILD_TESTING=OFF` and completely disable building tests:
 
@@ -231,35 +378,18 @@ $ cmake -G "Ninja Multi-Config" \
       -DCMAKE_TOOLCHAIN_FILE=etc/clang-19-toolchain.cmake \
       -DBEMAN_ITERATOR_INTERFACE_BUILD_TESTING=OFF \
       -B .build -S .
-
-# Build (similar).
-cmake --build .build --config Asan --target all -- -k 0
 ```
 
-<details>
-<summary> Build beman.iterator_interface only - NO tests (verbose logs) </summary>
+##### Skip Examples
+
+By default, we build and run tests. You can provide `-DBEMAN_ITERATOR_INTERFACE_BUILD_EXAMPLES=OFF` and completely disable building tests:
 
 ```shell
-# Configure build: build production code, skip tests (BEMAN_ITERATOR_INTERFACE_BUILD_TESTING=OFF).
+# Configure.
 $ cmake -G "Ninja Multi-Config" \
       -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Asan" \
       -DCMAKE_TOOLCHAIN_FILE=etc/clang-19-toolchain.cmake \
-      -DBEMAN_ITERATOR_INTERFACE_BUILD_TESTING=OFF \
+      -DBEMAN_ITERATOR_INTERFACE_BUILD_EXAMPLES=OFF \
       -B .build -S .
--- The CXX compiler identification is Clang 19.0.0
-...
--- Build files have been written to: /path/to/repo/.build
-
-# Build.
-$ cmake --build .build --config Asan --target all -- -k 0
-...
-[5/5] Linking CXX executable ... # Note: 5 targets here (tests were not built).
-
-# Check that tests are not built/installed.
-$ ctest --build-config Asan --output-on-failure --test-dir .build
-Internal ctest changing into directory: /path/to/beman/repo/.build
-Test project /path/to/beman/repo/.build
-No tests were found!!!
 ```
 
-</details>

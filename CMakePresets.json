@@ -1,143 +1,68 @@
 {
   "version": 6,
-  "cmakeMinimumRequired": {
-    "major": 3,
-    "minor": 29,
-    "patch": 2
-  },
   "configurePresets": [
     {
-      "name": "common",
-      "description": "General settings that apply to all configurations",
+      "name": "_root-config",
       "hidden": true,
-      "generator": "Ninja Multi-Config",
+      "generator": "Ninja",
       "binaryDir": "${sourceDir}/.build/${presetName}",
-      "installDir": "${sourceDir}/.install/${presetName}",
       "cacheVariables": {
-        "CMAKE_CONFIGURATION_TYPES": "RelWithDebInfo;Debug;Tsan;Asan"
+        "CMAKE_CXX_STANDARD": "20"
       }
     },
     {
-      "name": "system",
-      "inherits": "common",
-      "displayName": "System compiler",
-      "description": "Build with default cc and c++ compilers",
-      "toolchainFile": "${sourceDir}/etc/toolchain.cmake"
+      "name": "_debug-base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_FLAGS": "-fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract -fsanitize=leak -fsanitize=undefined"
+      }
     },
     {
-      "name": "gcc-14",
-      "inherits": "common",
-      "displayName": "GCC 14",
-      "description": "Build with GCC 14 compilers",
-      "toolchainFile": "${sourceDir}/etc/gcc-14-toolchain.cmake"
+      "name": "_release-base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+        "CMAKE_CXX_FLAGS": "-O3"
+      }
     },
     {
-      "name": "gcc-13",
-      "inherits": "common",
-      "displayName": "GCC 13",
-      "description": "Build with GCC 13 compilers",
-      "toolchainFile": "${sourceDir}/etc/gcc-13-toolchain.cmake"
+      "name": "gcc-debug",
+      "displayName": "GCC Debug Build",
+      "inherits": [
+        "_root-config",
+        "_debug-base"
+      ],
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "g++"
+      }
     },
     {
-      "name": "gcc-12",
-      "inherits": "common",
-      "displayName": "GCC 12",
-      "description": "Build with GCC 12 compilers",
-      "toolchainFile": "${sourceDir}/etc/gcc-12-toolchain.cmake"
-    },
-    {
-      "name": "clang-20",
-      "inherits": "common",
-      "displayName": "Clang 20",
-      "description": "Build with Clang 20 compilers",
-      "toolchainFile": "${sourceDir}/etc/clang-20-toolchain.cmake"
-    },
-    {
-      "name": "clang-19",
-      "inherits": "common",
-      "displayName": "Clang 19",
-      "description": "Build with Clang 19 compilers",
-      "toolchainFile": "${sourceDir}/etc/clang-19-toolchain.cmake"
-    },
-    {
-      "name": "clang-18",
-      "inherits": "common",
-      "displayName": "Clang 18",
-      "description": "Build with Clang 18 compilers",
-      "toolchainFile": "${sourceDir}/etc/clang-18-toolchain.cmake"
-    },
-    {
-      "name": "clang-17",
-      "inherits": "common",
-      "displayName": "Clang 17",
-      "description": "Build with Clang 17 compilers",
-      "toolchainFile": "${sourceDir}/etc/clang-17-toolchain.cmake"
-    },
-    {
-      "name": "clang-16",
-      "inherits": "common",
-      "displayName": "Clang 16",
-      "description": "Build with Clang 16 compilers",
-      "toolchainFile": "${sourceDir}/etc/clang-16-toolchain.cmake"
+      "name": "gcc-release",
+      "displayName": "GCC Release Build",
+      "inherits": [
+        "_root-config",
+        "_release-base"
+      ],
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "g++"
+      }
     }
   ],
   "buildPresets": [
     {
-      "name": "common",
-      "hidden": true,
-      "configuration": "Asan"
+      "name": "gcc-debug",
+      "configurePreset": "gcc-debug"
     },
     {
-      "name": "system",
-      "inherits": "common",
-      "configurePreset": "system"
-    },
-    {
-      "name": "gcc-14",
-      "inherits": "common",
-      "configurePreset": "gcc-14"
-    },
-    {
-      "name": "gcc-13",
-      "inherits": "common",
-      "configurePreset": "gcc-13"
-    },
-    {
-      "name": "gcc-12",
-      "inherits": "common",
-      "configurePreset": "gcc-12"
-    },
-    {
-      "name": "clang-20",
-      "inherits": "common",
-      "configurePreset": "clang-20"
-    },
-    {
-      "name": "clang-19",
-      "inherits": "common",
-      "configurePreset": "clang-19"
-    },
-    {
-      "name": "clang-18",
-      "inherits": "common",
-      "configurePreset": "clang-18"
-    },
-    {
-      "name": "clang-17",
-      "inherits": "common",
-      "configurePreset": "clang-17"
-    },
-    {
-      "name": "clang-16",
-      "inherits": "common",
-      "configurePreset": "clang-16"
+      "name": "gcc-release",
+      "configurePreset": "gcc-release"
     }
   ],
   "testPresets": [
     {
-      "name": "common",
+      "name": "_test_base",
       "hidden": true,
-      "configuration": "Asan",
       "output": {
         "outputOnFailure": true
       },
@@ -147,205 +72,50 @@
       }
     },
     {
-      "name": "system",
-      "inherits": "common",
-      "configurePreset": "system"
+      "name": "gcc-debug",
+      "inherits": "_test_base",
+      "configurePreset": "gcc-debug"
     },
     {
-      "name": "gcc-14",
-      "inherits": "common",
-      "configurePreset": "gcc-14"
-    },
-    {
-      "name": "gcc-13",
-      "inherits": "common",
-      "configurePreset": "gcc-13"
-    },
-    {
-      "name": "gcc-12",
-      "inherits": "common",
-      "configurePreset": "gcc-12"
-    },
-    {
-      "name": "clang-20",
-      "inherits": "common",
-      "configurePreset": "clang-20"
-    },
-    {
-      "name": "clang-19",
-      "inherits": "common",
-      "configurePreset": "clang-19"
-    },
-    {
-      "name": "clang-18",
-      "inherits": "common",
-      "configurePreset": "clang-18"
-    },
-    {
-      "name": "clang-17",
-      "inherits": "common",
-      "configurePreset": "clang-17"
-    },
-    {
-      "name": "clang-16",
-      "inherits": "common",
-      "configurePreset": "clang-16"
+      "name": "gcc-release",
+      "inherits": "_test_base",
+      "configurePreset": "gcc-release"
     }
   ],
   "workflowPresets": [
     {
-      "name": "system",
+      "name": "gcc-debug",
       "steps": [
         {
           "type": "configure",
-          "name": "system"
+          "name": "gcc-debug"
         },
         {
           "type": "build",
-          "name": "system"
+          "name": "gcc-debug"
         },
         {
           "type": "test",
-          "name": "system"
+          "name": "gcc-debug"
         }
       ]
     },
     {
-      "name": "gcc-14",
+      "name": "gcc-release",
       "steps": [
         {
           "type": "configure",
-          "name": "gcc-14"
+          "name": "gcc-release"
         },
         {
           "type": "build",
-          "name": "gcc-14"
+          "name": "gcc-release"
         },
         {
           "type": "test",
-          "name": "gcc-14"
-        }
-      ]
-    },
-    {
-      "name": "gcc-13",
-      "steps": [
-        {
-          "type": "configure",
-          "name": "gcc-13"
-        },
-        {
-          "type": "build",
-          "name": "gcc-13"
-        },
-        {
-          "type": "test",
-          "name": "gcc-13"
-        }
-      ]
-    },
-    {
-      "name": "gcc-12",
-      "steps": [
-        {
-          "type": "configure",
-          "name": "gcc-12"
-        },
-        {
-          "type": "build",
-          "name": "gcc-12"
-        },
-        {
-          "type": "test",
-          "name": "gcc-12"
-        }
-      ]
-    },
-    {
-      "name": "clang-20",
-      "steps": [
-        {
-          "type": "configure",
-          "name": "clang-20"
-        },
-        {
-          "type": "build",
-          "name": "clang-20"
-        },
-        {
-          "type": "test",
-          "name": "clang-20"
-        }
-      ]
-    },
-    {
-      "name": "clang-19",
-      "steps": [
-        {
-          "type": "configure",
-          "name": "clang-19"
-        },
-        {
-          "type": "build",
-          "name": "clang-19"
-        },
-        {
-          "type": "test",
-          "name": "clang-19"
-        }
-      ]
-    },
-    {
-      "name": "clang-18",
-      "steps": [
-        {
-          "type": "configure",
-          "name": "clang-18"
-        },
-        {
-          "type": "build",
-          "name": "clang-18"
-        },
-        {
-          "type": "test",
-          "name": "clang-18"
-        }
-      ]
-    },
-    {
-      "name": "clang-17",
-      "steps": [
-        {
-          "type": "configure",
-          "name": "clang-17"
-        },
-        {
-          "type": "build",
-          "name": "clang-17"
-        },
-        {
-          "type": "test",
-          "name": "clang-17"
-        }
-      ]
-    },
-    {
-      "name": "clang-16",
-      "steps": [
-        {
-          "type": "configure",
-          "name": "clang-16"
-        },
-        {
-          "type": "build",
-          "name": "clang-16"
-        },
-        {
-          "type": "test",
-          "name": "clang-16"
+          "name": "gcc-release"
         }
       ]
     }
   ]
 }
-
