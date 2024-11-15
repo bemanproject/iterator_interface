@@ -32,6 +32,42 @@ Full runable examples can be found in `examples/` - please check [./examples/REA
 The next code snippet shows iterator interface support added in [`std::iterator_interface` (P2727R)](https://wg21.link/P2727R4): define a random access iterator that iterates over a sequence of characters repeated indefinitely.
 
 ```cpp
+#include <beman/iterator_interface/iterator_interface.hpp>
+
+// repeated_chars_iterator uses iterator_interface to define a random access iterator
+// that iterates over a sequence of characters repeated indefinitely.
+class repeated_chars_iterator
+    : public beman::iterator_interface::ext_iterator_interface_compat<repeated_chars_iterator,
+                                                                      std::random_access_iterator_tag,
+                                                                      char,
+                                                                      char> {
+public:
+    // Default constructor creates an end-of-range iterator.
+    constexpr repeated_chars_iterator() : m_it_begin(nullptr), m_fixed_size(0), m_pos(0) {}
+
+    // Constructor for the beginning of the sequence.
+    constexpr repeated_chars_iterator(const char* it_begin, difference_type size, difference_type n)
+        : m_it_begin(it_begin), m_fixed_size(size), m_pos(n) {}
+
+    // Random access iterator requirements:
+    constexpr auto operator*() const { return m_it_begin[m_pos % m_fixed_size]; }
+    constexpr repeated_chars_iterator& operator+=(std::ptrdiff_t i) {
+        m_pos += i;
+        return *this;
+    }
+    constexpr auto operator-(repeated_chars_iterator other) const { return m_pos - other.m_pos; }
+
+private:
+    // Start of the sequence of characters.
+    const char*  m_it_begin;
+
+    // Number of characters in the sequence.
+    difference_type m_fixed_size;
+
+    // Current position in the sequence.
+    difference_type m_pos;
+};
+
 // Create a repeated_chars_iterator that iterates over the sequence "foo" repeated indefinitely:
 // "foofoofoofoofoofoo...". Will actually extract a prefix of the sequence and insert it into a std::string.
 constexpr const std::string_view target = "foo";
@@ -52,6 +88,18 @@ std::cout << extracted_result << "\n";                               // Expected
 The next code snippet shows iterator interface support added in [`std::iterator_interface` (P2727R4)](https://wg21.link/P2727R4): define a forward iterator that iterates over a sequence of integers, skipping those that do not satisfy a predicate.
 
 ```cpp
+#include <beman/iterator_interface/iterator_interface.hpp>
+
+// filtered_int_iterator uses iterator_interface to define a forward iterator
+// that iterates over a sequence of integers, skipping those that do not satisfy a predicate.
+template <typename Pred>
+struct filtered_int_iterator
+    : beman::iterator_interface::ext_iterator_interface_compat<filtered_int_iterator<Pred>,
+                                                               std::forward_iterator_tag,
+                                                               int> {
+    // ...
+};
+
 // Create a filtered_int_iterator that iterates over the sequence {1, 2, 3, 4, 10, 11, 101, 200, 0},
 // skipping odd numbers. 0 is not skipped, so it will be the last element in the sequence.
 std::array a = {1, 2, 3, 4, 10, 11, 101, 200, 0};
