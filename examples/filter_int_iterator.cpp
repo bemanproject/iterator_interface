@@ -10,7 +10,7 @@
 #include <array>
 #include <iostream>
 
-// filtered_int_iterator uses std::iterator_interface to define a forward iterator
+// filtered_int_iterator uses iterator_interface to define a forward iterator
 // that iterates over a sequence of integers, skipping those that do not satisfy a predicate.
 template <typename Pred>
 struct filtered_int_iterator

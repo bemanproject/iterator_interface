@@ -11,7 +11,7 @@
 #include <iostream>
 #include <string_view>
 
-// repeated_chars_iterator uses std::iterator_interface to define a random access iterator
+// repeated_chars_iterator uses iterator_interface to define a random access iterator
 // that iterates over a sequence of characters repeated indefinitely.
 class repeated_chars_iterator
     : public beman::iterator_interface::ext_iterator_interface_compat<repeated_chars_iterator,
