@@ -82,6 +82,7 @@ add_subdirectory(src/beman/iterator_interface)
 add_subdirectory(include/beman/iterator_interface)
 
 if(BEMAN_ITERATOR_INTERFACE_BUILD_TESTS)
+  enable_testing()
   add_subdirectory(tests/beman/iterator_interface)
 endif()
 

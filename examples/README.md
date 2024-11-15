@@ -17,13 +17,13 @@ Check basic `beman.iterator_interface` library usages:
 
 ```shell
 # build
-$ cmake --workflow --preset gcc-14 # or choose one from --list-presets
+$ cmake --workflow --preset gcc-debug
 
 # run repeated_chars_iterator.cpp
-$ .build/gcc-14/examples/Asan/beman.iterator_interface.examples.repeated_chars_iterator 
+$ .build/gcc-debug/examples/beman.iterator_interface.examples.repeated_chars_iterator
 foofoof
 
 # run filter_int_iterator.cpp
-$ .build/gcc-14/examples/Asan/beman.iterator_interface.examples.filter_int_iterator
+$ .build/gcc-debug/examples/beman.iterator_interface.examples.filter_int_iterator
 2 4 10 200
 ```

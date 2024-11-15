@@ -17,7 +17,7 @@ Documentation and associated papers are licensed with the Creative Commons Attri
 
 // SPDX-License-Identifier: CC-BY-4.0
 
-The intent is that the source and documentation are available for use by people implementing their iterator types as well as people using the iterator_interface presented here as-is.
+The intent is that the source and documentation are available for use by people implementing their iterator types.
 
 The README itself is licesed with CC0 1.0 Universal. Copy the contents and incorporate in your own work as you see fit.
 
@@ -164,7 +164,7 @@ Preset CMake variables:
 -- Found Threads: TRUE
 -- Configuring done (2.7s)
 -- Generating done (0.0s)
--- Build files have been written to: /home/dariusn/git/Beman/iterator_interface/.build/gcc-debug
+-- Build files have been written to: /path/to/repo/.build/gcc-debug
 
 Executing workflow step 2 of 3: build preset "gcc-debug"
 
@@ -172,7 +172,7 @@ Executing workflow step 2 of 3: build preset "gcc-debug"
 
 Executing workflow step 3 of 3: test preset "gcc-debug"
 
-Test project /home/dariusn/git/Beman/iterator_interface/.build/gcc-debug
+Test project /path/to/repo/.build/gcc-debug
     Start 1: IteratorTest.TestGTest
 1/4 Test #1: IteratorTest.TestGTest ...........   Passed    0.01 sec
     Start 2: IteratorTest.TestRepeatedChars
@@ -224,7 +224,7 @@ Preset CMake variables:
 -- Found Threads: TRUE
 -- Configuring done (2.7s)
 -- Generating done (0.0s)
--- Build files have been written to: /home/dariusn/git/Beman/iterator_interface/.build/gcc-release
+-- Build files have been written to: /path/to/repo/.build/gcc-release
 
 Executing workflow step 2 of 3: build preset "gcc-release"
 
@@ -232,7 +232,7 @@ Executing workflow step 2 of 3: build preset "gcc-release"
 
 Executing workflow step 3 of 3: test preset "gcc-release"
 
-Test project /home/dariusn/git/Beman/iterator_interface/.build/gcc-release
+Test project /path/to/repo/.build/gcc-release
     Start 1: IteratorTest.TestGTest
 1/4 Test #1: IteratorTest.TestGTest ...........   Passed    0.00 sec
     Start 2: IteratorTest.TestRepeatedChars

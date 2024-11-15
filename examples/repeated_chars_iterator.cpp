@@ -3,6 +3,7 @@
 
 // [P2727](https://wg21.link/P2727) example:
 // An iterator that allows iterating over repetitions of a sequence of characters.
+
 #include <beman/iterator_interface/iterator_interface.hpp>
 
 #include <algorithm>
@@ -50,7 +51,7 @@ int main() {
     constexpr const std::string_view target = "foo";
     constexpr const auto len = 7;                                        // Number of extracted characters from the sequence.
 
-    // Create iterators that iterate over the sequence "foofoofoofoofoofoo...".
+    // Create iterators that go over the sequence "foofoofoofoofoofoo...".
     repeated_chars_iterator it_first(target.data(), target.size(), 0);   // target.size() == 3 is the length of "foo", 0 is this iterator's position.
     repeated_chars_iterator it_last(target.data(), target.size(), len);  // Same as above, but now the iterator's position is 7.
 

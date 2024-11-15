@@ -3,6 +3,7 @@
 
 // [P2727](https://wg21.link/P2727) example:
 // An iterator that allows filtering int elements of a sequence.
+
 #include <beman/iterator_interface/iterator_interface.hpp>
 
 #include <algorithm>
@@ -25,7 +26,7 @@ struct filtered_int_iterator
     }
 
     // A forward iterator based on iterator_interface usually requires
-    // three user-defined operations.  since we are adapting an existing
+    // three user-defined operations.  Since we are adapting an existing
     // iterator (an int *), we only need to define this one.  The others are
     // implemented by iterator_interface, using the underlying int *.
     filtered_int_iterator& operator++() {
@@ -59,9 +60,9 @@ int main() {
     // skipping odd numbers. 0 is not skipped, so it will be the last element in the sequence.
     std::array a = {1, 2, 3, 4, 10, 11, 101, 200, 0};
     filtered_int_iterator it{std::begin(a), std::end(a), [](int i) { return i % 2 == 0; }};
-
-    while (*it) {
-        std::cout << *it << " ";
+    
+    while (*it) {                   // Expected output at STDOUT:
+        std::cout << *it << " ";    // 2 4 10 200 0
         ++it;
     }
     std::cout << "\n";
