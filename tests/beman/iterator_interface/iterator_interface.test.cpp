@@ -137,7 +137,6 @@ struct filtered_int_iterator
 };
 
 TEST(IteratorTest, TestFilteredIter) {
-    
     int                   a[] = {1, 2, 3, 4};
     filtered_int_iterator f{std::begin(a), std::end(a), [](int i) { return (i % 2) == 0; }};
     ASSERT_EQ(*f, 2);
