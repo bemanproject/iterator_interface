@@ -17,6 +17,14 @@ namespace {} // namespace
 
 TEST(IteratorTest, TestGTest) { ASSERT_EQ(1, 1); }
 
+#define CONSTEXPR_EXPECT_EQ(val1, val2)   \
+    if (::std::is_constant_evaluated()) { \
+        if (!((val1) == (val2))) {        \
+            ::std::abort();               \
+        }                                 \
+    } else                                \
+        EXPECT_EQ(val1, val2)
+
 struct repeated_chars_iterator
     : ext_iterator_interface_compat<repeated_chars_iterator, std::random_access_iterator_tag, char, char> {
     constexpr repeated_chars_iterator() : first_(nullptr), size_(0), n_(0) {}
@@ -37,11 +45,57 @@ struct repeated_chars_iterator
 };
 
 TEST(IteratorTest, TestRepeatedChars) {
+    auto lambda = [&] {
+        repeated_chars_iterator first("foo", 3, 0); // 3 is the length of "foo", 0 is this iterator's position.
+        repeated_chars_iterator last("foo", 3, 7);  // Same as above, but now the iterator's position is 7.
+        std::string             result;
+        std::copy(first, last, std::back_inserter(result));
+        CONSTEXPR_EXPECT_EQ(result, "foofoof");
+    };
+
+    static_assert((lambda(), true));
+    lambda();
+}
+
+TEST(IteratorTest, TestDistance) {
+    auto lambda = [&] {
+        repeated_chars_iterator first("foo", 3, 0); // 3 is the length of "foo", 0 is this iterator's position.
+        repeated_chars_iterator last("foo", 3, 3); // 3 is the length of "foo", 3 is this iterator's position.
+        std::string             result;
+        std::copy(first, last, std::back_inserter(result));
+        CONSTEXPR_EXPECT_EQ(std::distance(first, last), 3);
+    };
+
+    static_assert((lambda(), true));
+    lambda();    
+}
+
+TEST(IteratorTest, TestNext) {
+    auto lambda = [&] {
+        repeated_chars_iterator first("foo", 3, 0); // 3 is the length of "foo", 0 is this iterator's position.
+        repeated_chars_iterator last("foo", 3, 3); // 3 is the length of "foo", 3 is this iterator's position.
+        CONSTEXPR_EXPECT_EQ(std::next(first, 3), last);
+    };
+
+    static_assert((lambda(), true));
+    lambda();    
+}
+
+TEST(IteratorTest, TestConcepts) {
+    const auto test = [](auto&& it) {
+        // The iterator type of it.
+        using iterator = typename std::remove_reference_t<decltype(it)>;
+
+        // Check std::contiguous_iterator concept.
+        // Note: Check each sub-concept to get the less verbose error message first!
+        static_assert(std::input_iterator<iterator>);
+        static_assert(std::forward_iterator<iterator>);
+        static_assert(std::bidirectional_iterator<iterator>);
+        static_assert(std::random_access_iterator<iterator>);
+    };
+
     repeated_chars_iterator first("foo", 3, 0); // 3 is the length of "foo", 0 is this iterator's position.
-    repeated_chars_iterator last("foo", 3, 7);  // Same as above, but now the iterator's position is 7.
-    std::string             result;
-    std::copy(first, last, std::back_inserter(result));
-    ASSERT_EQ(result, "foofoof");
+    test(first);
 }
 
 template <typename Pred>
