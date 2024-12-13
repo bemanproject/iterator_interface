@@ -67,16 +67,20 @@ target_sources(
          TYPE
          HEADERS
          BASE_DIRS
-         src
-         include)
+         # XXX src
+         ${PROJECT_BINARY_DIR}/include
+         ${PROJECT_SOURCE_DIR}/include
+         FILES
+         ${PROJECT_BINARY_DIR}/include/beman/iterator_interface/config.hpp
+         )
 
-target_include_directories(
-  beman.iterator_interface
-  PUBLIC
-    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-    $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${CMAKE_LOWER_PROJECT_NAME}>
-)
+# target_include_directories(
+#   beman.iterator_interface
+#   PUBLIC
+#     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+#     $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
+#     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${CMAKE_LOWER_PROJECT_NAME}>
+# )
 
 add_subdirectory(src/beman/iterator_interface)
 add_subdirectory(include/beman/iterator_interface)
@@ -100,5 +104,5 @@ add_custom_target(
   COMMAND mkdir -p coverage
   COMMAND gcovr --config gcovr.cfg .)
 
-install(FILES ${PROJECT_BINARY_DIR}/include/beman/iterator_interface/config.hpp
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/beman/iterator_interface)
+# install(FILES ${PROJECT_BINARY_DIR}/include/beman/iterator_interface/config.hpp
+#         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/beman/iterator_interface)
