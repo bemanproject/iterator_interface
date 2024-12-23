@@ -4,10 +4,15 @@ SPDX-License-Identifier: 2.0 license with LLVM exceptions
 
 # beman.iterator\_interface: iterator creation mechanisms
 
-![CI Tests](https://github.com/bemanproject/iterator_interface/actions/workflows/ci.yml/badge.svg)
+<!-- markdownlint-disable -->
+<img src="https://github.com/bemanproject/beman/blob/main/images/logos/beman_logo-beman_library_under_development.png" style="width:5%; height:auto;"> ![CI Tests](https://github.com/bemanproject/iterator_interface/actions/workflows/ci.yml/badge.svg)
+<!-- markdownlint-enable -->
 
-**Implements**:
-* [`std::iterator_interface` (P2727R4)](https://wg21.link/P2727R4)
+**Implements**: [`std::iterator_interface` (P2727R4)](https://wg21.link/P2727R4)
+
+<!-- markdownlint-disable -->
+**Status**: [Under development and not yet ready for production use.](https://github.com/bemanproject/beman/blob/main/docs/BEMAN_LIBRARY_MATURITY_MODEL.md#under-development-and-not-yet-ready-for-production-use)
+<!-- markdownlint-enable -->
 
 Source is licensed with the Apache 2.0 license with LLVM exceptions
 
