@@ -15,10 +15,11 @@ target_sources(
   PRIVATE FILE_SET beman_iterator_interface_tests_headers TYPE HEADERS)
 
 target_link_libraries(
-  beman.iterator_interface.tests PRIVATE beman::iterator_interface # XXX GTest::gtest
+  beman.iterator_interface.tests PRIVATE beman::iterator_interface GTest::gtest
                                          GTest::gtest_main)
 
-# [Issue #18](https://github.com/bemanproject/iterator_interface/issues/18): Re-enable ASAN run CI/clang-19.
+# [Issue #18](https://github.com/bemanproject/iterator_interface/issues/18):
+# Re-enable ASAN run CI/clang-19.
 #
 # Note: clang-19 + gtest_discover_tests + Asan setup causes errors on some
 # platforms. Temporary switch to gtest_add_tests and skip some Asan checks.

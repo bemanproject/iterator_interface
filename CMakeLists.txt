@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 # cmake-format: on
 
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.27...3.31)
 
 project(
   beman.iterator_interface
@@ -23,15 +23,19 @@ beman_iterator_check_deducing_this(COMPILER_SUPPORTS_DEDUCING_THIS)
 
 set(TARGETS_EXPORT_NAME ${CMAKE_PROJECT_NAME}Targets)
 
-option(BEMAN_ITERATOR_INTERFACE_USE_DEDUCING_THIS
+option(
+  BEMAN_ITERATOR_INTERFACE_USE_DEDUCING_THIS
   "Make use of C++23 \"deducing this\" feature (P0847R7). Turn this off for non-conforming compilers."
   ${COMPILER_SUPPORTS_DEDUCING_THIS})
 
-option(BEMAN_ITERATOR_INTERFACE_BUILD_TESTS
-       "Enable building tests and test infrastructure. Default: ON. Values: {ON, OFF}." ${PROJECT_IS_TOP_LEVEL})
+option(
+  BEMAN_ITERATOR_INTERFACE_BUILD_TESTS
+  "Enable building tests and test infrastructure. Default: ON. Values: {ON, OFF}."
+  ${PROJECT_IS_TOP_LEVEL})
 
 option(BEMAN_ITERATOR_INTERFACE_BUILD_EXAMPLES
-       "Enable building examples. Default: ON. Values: {ON, OFF}." ${PROJECT_IS_TOP_LEVEL})
+       "Enable building examples. Default: ON. Values: {ON, OFF}."
+       ${PROJECT_IS_TOP_LEVEL})
 
 if(BEMAN_ITERATOR_INTERFACE_USE_DEDUCING_THIS
    AND NOT COMPILER_SUPPORTS_DEDUCING_THIS)
@@ -67,20 +71,10 @@ target_sources(
          TYPE
          HEADERS
          BASE_DIRS
-         # XXX src
          ${PROJECT_BINARY_DIR}/include
          ${PROJECT_SOURCE_DIR}/include
          FILES
-         ${PROJECT_BINARY_DIR}/include/beman/iterator_interface/config.hpp
-         )
-
-# target_include_directories(
-#   beman.iterator_interface
-#   PUBLIC
-#     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-#     $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
-#     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${CMAKE_LOWER_PROJECT_NAME}>
-# )
+         ${PROJECT_BINARY_DIR}/include/beman/iterator_interface/config.hpp)
 
 add_subdirectory(src/beman/iterator_interface)
 add_subdirectory(include/beman/iterator_interface)
@@ -103,6 +97,3 @@ add_custom_target(
   COMMENT "Running gcovr to process coverage results"
   COMMAND mkdir -p coverage
   COMMAND gcovr --config gcovr.cfg .)
-
-# install(FILES ${PROJECT_BINARY_DIR}/include/beman/iterator_interface/config.hpp
-#         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/beman/iterator_interface)
