@@ -14,16 +14,14 @@
       "name": "_debug-base",
       "hidden": true,
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_CXX_FLAGS": "-fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract -fsanitize=leak -fsanitize=undefined"
+        "CMAKE_BUILD_TYPE": "Debug"
       }
     },
     {
       "name": "_release-base",
       "hidden": true,
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "RelWithDebInfo",
-        "CMAKE_CXX_FLAGS": "-O3"
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
       }
     },
     {
