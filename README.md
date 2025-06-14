@@ -2,7 +2,7 @@
 SPDX-License-Identifier: 2.0 license with LLVM exceptions
 -->
 
-# beman.iterator\_interface: iterator creation mechanisms
+# beman.iterator_interface: iterator creation mechanisms
 
 <!-- markdownlint-disable -->
 <img src="https://github.com/bemanproject/beman/blob/main/images/logos/beman_logo-beman_library_under_development.png" style="width:5%; height:auto;"> ![CI Tests](https://github.com/bemanproject/iterator_interface/actions/workflows/ci.yml/badge.svg)
@@ -24,15 +24,15 @@ Documentation and associated papers are licensed with the Creative Commons Attri
 
 The intent is that the source and documentation are available for use by people implementing their iterator types.
 
-The README itself is licesed with CC0 1.0 Universal. Copy the contents and incorporate in your own work as you see fit.
+The README itself is licensed with CC0 1.0 Universal. Copy the contents and incorporate in your own work as you see fit.
 
 // SPDX-License-Identifier: CC0-1.0
 
 ## Examples
 
-Full runable examples can be found in `examples/` - please check [./examples/README.md](./examples/README.md) for building the code on local setup or on Compiler Explorer.
+Full runnable examples can be found in `examples/` - please check [examples/README.md](./examples/README.md) for building the code on local setup or on Compiler Explorer.
 
-### Repetead Chars Iterator
+### Repeated Chars Iterator
 
 The next code snippet shows iterator interface support added in [`std::iterator_interface` (P2727R)](https://wg21.link/P2727R4): define a random access iterator that iterates over a sequence of characters repeated indefinitely.
 
@@ -150,7 +150,7 @@ apt-get install                             \
 
 ### Instructions
 
-#### Preset CMake Flows
+#### Preset CMake Workflows
 
 This project strives to be as normal and simple a CMake project as possible. This build workflow in particular will
 work, producing a static `beman.iterator_interface` library, ready to package:
