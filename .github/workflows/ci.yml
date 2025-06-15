@@ -26,10 +26,9 @@ jobs:
           - {name: "Ubuntu GCC 12", os: ubuntu-24.04, toolchain: "gcc-12",  cmake_args: "-G \"Ninja Multi-Config\" -DCMAKE_CONFIGURATION_TYPES=\"RelWithDebInfo;Asan\" "}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: 'true'
-      - uses: seanmiddleditch/gha-setup-ninja@master
       - name: Activate verbose shell
         run: set -x
       - name: Install LLVM+Clang
