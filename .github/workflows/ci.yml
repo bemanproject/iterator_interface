@@ -34,7 +34,6 @@ jobs:
       - name: Install LLVM+Clang
         if: startsWith(matrix.config.name, 'Ubuntu Clang')
         run: |
-          cat /etc/lsb-release
           # Remove existing Clang installations.
           sudo apt-get remove \
             clang-${{matrix.config.installed_clang_version}} \
