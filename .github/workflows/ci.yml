@@ -34,7 +34,6 @@ jobs:
       - name: Install LLVM+Clang
         if: startsWith(matrix.config.name, 'Ubuntu Clang')
         run: |
-          set -x
           cat /etc/lsb-release
           # Remove existing Clang installations.
           sudo apt-get remove \
@@ -70,7 +69,6 @@ jobs:
       - name: Install GCC
         if: startsWith(matrix.config.name, 'Ubuntu GCC')
         run: |
-          set -x
           # Remove existing GCC installations.
           sudo apt-get remove gcc-13 g++-13 gcc-14 g++-14 gcc g++
           sudo apt update
@@ -82,18 +80,14 @@ jobs:
           g++-${GCC_VERSION} --version
       - name: CMake Configure
         run: |
-          set -x
           echo ${{ matrix.config.cmake_args }}
           echo ${{ matrix.config.toolchain }}
-          rm -rf .build
           cmake ${{ matrix.config.cmake_args }} -DCMAKE_TOOLCHAIN_FILE="etc/${{ matrix.config.toolchain }}-toolchain.cmake" -B .build -S .
       - name: CMake Build
         run: |
-          set -x
           cmake --build .build --config Asan --target all -- -k 0
       - name: CMake Test
         run: |
-          set -x
           [[ ! -z "${{ matrix.config.asan_options }}" ]]  && export ASAN_OPTIONS="${{ matrix.config.asan_options }}"
           ctest --build-config Asan --output-on-failure --test-dir .build
 
