@@ -13,15 +13,15 @@
 // filtered_int_iterator uses iterator_interface to define a forward iterator
 // that iterates over a sequence of integers, skipping those that do not satisfy a predicate.
 template <typename Pred>
-struct filtered_int_iterator
-    : beman::iterator_interface::ext_iterator_interface_compat<filtered_int_iterator<Pred>,
-                                                               std::forward_iterator_tag,
-                                                               int> {
+struct filtered_int_iterator : beman::iterator_interface::ext_iterator_interface_compat<filtered_int_iterator<Pred>,
+                                                                                        std::forward_iterator_tag,
+                                                                                        int> {
     // Default constructor creates an end-of-range iterator.
     filtered_int_iterator() : m_it_begin(nullptr) {}
 
     // Constructor for the beginning of the sequence.
-    filtered_int_iterator(int* it_begin, int* it_end, Pred pred) : m_it_begin(it_begin), m_it_end(it_end), m_pred(std::move(pred)) {
+    filtered_int_iterator(int* it_begin, int* it_end, Pred pred)
+        : m_it_begin(it_begin), m_it_end(it_end), m_pred(std::move(pred)) {
         m_it_begin = std::find_if(m_it_begin, m_it_end, m_pred);
     }
 
@@ -58,11 +58,11 @@ struct filtered_int_iterator
 int main() {
     // Create a filtered_int_iterator that iterates over the sequence {1, 2, 3, 4, 10, 11, 101, 200, 0},
     // skipping odd numbers. 0 is not skipped, so it will be the last element in the sequence.
-    std::array a = {1, 2, 3, 4, 10, 11, 101, 200, 0};
+    std::array            a = {1, 2, 3, 4, 10, 11, 101, 200, 0};
     filtered_int_iterator it{std::begin(a), std::end(a), [](int i) { return i % 2 == 0; }};
-    
-    while (*it) {                   // Expected output at STDOUT:
-        std::cout << *it << " ";    // 2 4 10 200 0
+
+    while (*it) {                // Expected output at STDOUT:
+        std::cout << *it << " "; // 2 4 10 200 0
         ++it;
     }
     std::cout << "\n";

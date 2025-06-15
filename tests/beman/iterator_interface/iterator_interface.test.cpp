@@ -60,25 +60,25 @@ TEST(IteratorTest, TestRepeatedChars) {
 TEST(IteratorTest, TestDistance) {
     auto lambda = [&] {
         repeated_chars_iterator first("foo", 3, 0); // 3 is the length of "foo", 0 is this iterator's position.
-        repeated_chars_iterator last("foo", 3, 3); // 3 is the length of "foo", 3 is this iterator's position.
+        repeated_chars_iterator last("foo", 3, 3);  // 3 is the length of "foo", 3 is this iterator's position.
         std::string             result;
         std::copy(first, last, std::back_inserter(result));
         CONSTEXPR_EXPECT_EQ(std::distance(first, last), 3);
     };
 
     static_assert((lambda(), true));
-    lambda();    
+    lambda();
 }
 
 TEST(IteratorTest, TestNext) {
     auto lambda = [&] {
         repeated_chars_iterator first("foo", 3, 0); // 3 is the length of "foo", 0 is this iterator's position.
-        repeated_chars_iterator last("foo", 3, 3); // 3 is the length of "foo", 3 is this iterator's position.
+        repeated_chars_iterator last("foo", 3, 3);  // 3 is the length of "foo", 3 is this iterator's position.
         CONSTEXPR_EXPECT_EQ(std::next(first, 3), last);
     };
 
     static_assert((lambda(), true));
-    lambda();    
+    lambda();
 }
 
 TEST(IteratorTest, TestConcepts) {
@@ -174,30 +174,26 @@ TEST(IteratorTest, OperatorArrow) {
     ASSERT_EQ(ai->f(), 3);
 }
 
-struct dummy_input_iterator :
-    public ext_iterator_interface_compat<
-      dummy_input_iterator, std::input_iterator_tag, int, int const&, void, std::ptrdiff_t> {
-  constexpr dummy_input_iterator() { }
-  dummy_input_iterator(dummy_input_iterator const&) = delete;
-  dummy_input_iterator& operator=(dummy_input_iterator const&) = delete;
-  dummy_input_iterator(dummy_input_iterator&&) = default;
-  dummy_input_iterator& operator=(dummy_input_iterator&&) = default;
-  constexpr reference operator*() const {
-    return foo;
-  }
-  constexpr dummy_input_iterator& operator++() {
-    return *this;
-  }
-  constexpr void operator++(int) {}
+struct dummy_input_iterator : public ext_iterator_interface_compat<dummy_input_iterator,
+                                                                   std::input_iterator_tag,
+                                                                   int,
+                                                                   const int&,
+                                                                   void,
+                                                                   std::ptrdiff_t> {
+    constexpr dummy_input_iterator() {}
+    dummy_input_iterator(const dummy_input_iterator&)                 = delete;
+    dummy_input_iterator& operator=(const dummy_input_iterator&)      = delete;
+    dummy_input_iterator(dummy_input_iterator&&)                      = default;
+    dummy_input_iterator&           operator=(dummy_input_iterator&&) = default;
+    constexpr reference             operator*() const { return foo; }
+    constexpr dummy_input_iterator& operator++() { return *this; }
+    constexpr void                  operator++(int) {}
 
-  friend constexpr bool operator==(std::default_sentinel_t const&,
-                                   dummy_input_iterator const&) {
-    return true;
-  }
+    friend constexpr bool operator==(const std::default_sentinel_t&, const dummy_input_iterator&) { return true; }
 
-  friend beman::iterator_interface::iterator_interface_access;
+    friend beman::iterator_interface::iterator_interface_access;
 
-  int foo = 0;
+    int foo = 0;
 };
 
 static_assert(std::input_iterator<dummy_input_iterator>);
