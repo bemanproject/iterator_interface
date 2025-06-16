@@ -8,12 +8,16 @@ target_sources(beman.iterator_interface PUBLIC iterator_interface.cpp)
 
 # The library is empty -- exclude it
 install(
-  TARGETS beman.iterator_interface
-  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-          COMPONENT beman.iterator_interface.library
-          EXCLUDE_FROM_ALL)
+    TARGETS beman.iterator_interface
+    ARCHIVE
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        COMPONENT beman.iterator_interface.library
+        EXCLUDE_FROM_ALL
+)
 
 install(
-  TARGETS beman.iterator_interface FILE_SET beman_iterator_interface_headers
-  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-  COMPONENT beman_iterator_interface_development)
+    TARGETS beman.iterator_interface
+    FILE_SET beman_iterator_interface_headers
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+        COMPONENT beman_iterator_interface_development
+)

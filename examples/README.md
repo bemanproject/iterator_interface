@@ -10,8 +10,10 @@ List of usage examples for `beman.iterator_interface`.
 
 Check basic `beman.iterator_interface` library usages:
 
+<!-- markdownlint-disable -->
 * [P2727](https://wg21.link/P2727): local [./repeated_chars_iterator.cpp](./repeated_chars_iterator.cpp) or [repeated_chars_iterator.cpp@Compiler Explorer](https://godbolt.org/z/Yn9K15c9b)
 * [P2727](https://wg21.link/P2727): local [./filter_int_iterator.cpp](./filter_int_iterator.cpp) or [filter_int_iterator.cpp@Compiler Explorer](https://godbolt.org/z/q6933enqe)
+<!-- markdownlint-enable -->
 
 ## Local Build and Run
 

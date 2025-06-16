@@ -7,16 +7,20 @@ include(GoogleTest)
 
 add_executable(beman.iterator_interface.tests)
 
-target_sources(beman.iterator_interface.tests
-               PRIVATE iterator_interface.test.cpp)
+target_sources(
+    beman.iterator_interface.tests
+    PRIVATE iterator_interface.test.cpp
+)
 
 target_sources(
-  beman.iterator_interface.tests
-  PRIVATE FILE_SET beman_iterator_interface_tests_headers TYPE HEADERS)
+    beman.iterator_interface.tests
+    PRIVATE FILE_SET beman_iterator_interface_tests_headers TYPE HEADERS
+)
 
 target_link_libraries(
-  beman.iterator_interface.tests PRIVATE beman::iterator_interface GTest::gtest
-                                         GTest::gtest_main)
+    beman.iterator_interface.tests
+    PRIVATE beman::iterator_interface GTest::gtest GTest::gtest_main
+)
 
 # [Issue #18](https://github.com/bemanproject/iterator_interface/issues/18):
 # Re-enable ASAN run CI/clang-19.

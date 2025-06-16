@@ -97,4 +97,3 @@ jobs:
           set -x
           [[ ! -z "${{ matrix.config.asan_options }}" ]]  && export ASAN_OPTIONS="${{ matrix.config.asan_options }}"
           ctest --build-config Asan --output-on-failure --test-dir .build
-

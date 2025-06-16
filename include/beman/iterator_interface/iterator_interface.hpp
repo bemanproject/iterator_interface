@@ -142,31 +142,27 @@ struct iter_cat<IteratorConcept, ReferenceType, false> {};
 
 template <typename IteratorConcept, typename ReferenceType>
 struct iter_cat<IteratorConcept, ReferenceType, true> {
-    using iterator_category =
-        std::conditional_t<
-            !std::is_reference_v<ReferenceType>,
-            std::input_iterator_tag,
-            std::conditional_t<
-                std::is_base_of_v<std::random_access_iterator_tag, IteratorConcept>,
-                std::random_access_iterator_tag,
-                std::conditional_t<
-                    std::is_base_of_v<std::bidirectional_iterator_tag, IteratorConcept>,
-                    std::bidirectional_iterator_tag,
-                    std::forward_iterator_tag>>>;
+    using iterator_category = std::conditional_t<
+        !std::is_reference_v<ReferenceType>,
+        std::input_iterator_tag,
+        std::conditional_t<std::is_base_of_v<std::random_access_iterator_tag, IteratorConcept>,
+                           std::random_access_iterator_tag,
+                           std::conditional_t<std::is_base_of_v<std::bidirectional_iterator_tag, IteratorConcept>,
+                                              std::bidirectional_iterator_tag,
+                                              std::forward_iterator_tag>>>;
 };
 
 } // namespace detail
 
 template <class IteratorConcept, class ValueType, class Reference, class Pointer, class DifferenceType>
 class iterator_interface
-    : detail::iter_cat<IteratorConcept, Reference, std::derived_from<IteratorConcept, std::forward_iterator_tag>>
-{
+    : detail::iter_cat<IteratorConcept, Reference, std::derived_from<IteratorConcept, std::forward_iterator_tag>> {
   public:
     using iterator_concept = IteratorConcept;
-    using value_type      = remove_const_t<ValueType>;
-    using reference       = Reference;
-    using pointer         = conditional_t<is_same_v<iterator_concept, output_iterator_tag>, void, Pointer>;
-    using difference_type = DifferenceType;
+    using value_type       = remove_const_t<ValueType>;
+    using reference        = Reference;
+    using pointer          = conditional_t<is_same_v<iterator_concept, output_iterator_tag>, void, Pointer>;
+    using difference_type  = DifferenceType;
 
     constexpr decltype(auto) operator*(this auto&& self)
         requires requires { *iterator_interface_access::base(self); }
