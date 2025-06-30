@@ -2,4 +2,4 @@
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
 # Codeowners for reviews on PRs
-*       @camio @neatudarius @steve-downey @bemanproject/core-reviewers
+* @camio @neatudarius @steve-downey @RaduNichita
