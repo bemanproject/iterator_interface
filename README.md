@@ -18,24 +18,32 @@ Source is licensed with the Apache 2.0 license with LLVM exceptions
 
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 
-Documentation and associated papers are licensed with the Creative Commons Attribution 4.0 International license.
+Documentation and associated papers are licensed with the Creative Commons
+Attribution 4.0 International license.
 
 // SPDX-License-Identifier: CC-BY-4.0
 
-The intent is that the source and documentation are available for use by people implementing their iterator types.
+The intent is that the source and documentation are available for use by people
+implementing their iterator types.
 
-The README itself is licensed with CC0 1.0 Universal. Copy the contents and incorporate in your own work as you see fit.
+The README itself is licensed with CC0 1.0 Universal. Copy the contents and
+incorporate in your own work as you see fit.
 
 // SPDX-License-Identifier: CC0-1.0
 
 ## Examples
 
-Full runnable examples can be found in `examples/` - please check [examples/README.md](./examples/README.md) for building the code on local setup or on Compiler Explorer.
+Full runnable examples can be found in `examples/` - please check
+[examples/README.md](./examples/README.md) for building the code on local setup
+or on Compiler Explorer.
 
 ### Repeated Chars Iterator
 
-The next code snippet shows iterator interface support added in [`std::iterator_interface` (P2727R)](https://wg21.link/P2727R4): define a random access iterator that iterates over a sequence of characters repeated indefinitely.
+The next code snippet shows iterator interface support added in
+[`std::iterator_interface` (P2727R)](https://wg21.link/P2727R4): define a random
+access iterator that iterates over a sequence of characters repeated indefinitely.
 
+<!-- markdownlint-disable -->
 ```cpp
 #include <beman/iterator_interface/iterator_interface.hpp>
 
@@ -87,11 +95,16 @@ std::copy(it_first, it_last, std::back_inserter(extracted_result));
 assert(extracted_result.size() == len);
 std::cout << extracted_result << "\n";                               // Expected output at STDOUT: "foofoof"
 ```
+<!-- markdownlint-enable -->
 
 ### Filter Integer Iterator
 
-The next code snippet shows iterator interface support added in [`std::iterator_interface` (P2727R4)](https://wg21.link/P2727R4): define a forward iterator that iterates over a sequence of integers, skipping those that do not satisfy a predicate.
+The next code snippet shows iterator interface support added in
+[`std::iterator_interface` (P2727R4)](https://wg21.link/P2727R4): define a
+forward iterator that iterates over a sequence of integers, skipping those that
+do not satisfy a predicate.
 
+<!-- markdownlint-disable -->
 ```cpp
 #include <beman/iterator_interface/iterator_interface.hpp>
 
@@ -116,19 +129,21 @@ while (*it) {
 }
 std::cout << "\n";
 ```
+<!-- markdownlint-enable -->
 
 ## How to Build
 
 ### Compiler Support
 
-This is a modern C++ project which can be compiled with the latest C++ standards (**C++20 or later**).
+This is a modern C++ project which can be compiled with the latest C++ standards
+(**C++20 or later**).
 
 Default build: `C++23`. Please check `etc/${compiler}-flags.cmake`.
 
 ### Dependencies
 
-This project is mainly tested on `Ubuntu 22.04` and `Ubuntu 24.04`, but it should be as portable as CMake is. This
-project has no C or C++ dependencies.
+This project is mainly tested on `Ubuntu 22.04` and `Ubuntu 24.04`, but it
+should be as portable as CMake is. This project has no C or C++ dependencies.
 
 Build-time dependencies:
 
@@ -152,9 +167,11 @@ apt-get install                             \
 
 #### Preset CMake Workflows
 
-This project strives to be as normal and simple a CMake project as possible. This build workflow in particular will
-work, producing a static `beman.iterator_interface` library, ready to package:
+This project strives to be as normal and simple a CMake project as possible. This
+build workflow in particular will work, producing a static
+`beman.iterator_interface` library, ready to package:
 
+<!-- markdownlint-disable -->
 ```shell
 $ cmake --workflow --preset gcc-debug
 $ cmake --workflow --preset gcc-release
@@ -183,10 +200,12 @@ $ tree /opt/beman.iterator_interface
 
 <details>
 <summary> Build beman.iterator_interface (verbose logs - gcc-debug) </summary>
+<!-- markdownlint-enable -->
 
+This should build and run the tests with system GCC with the address and
+undefined behavior sanitizers enabled.
 
-This should build and run the tests with system GCC with the address and undefined behavior sanitizers enabled.
-
+<!-- markdownlint-disable -->
 ```shell
 $ cmake --workflow --preset gcc-debug
 Executing workflow step 1 of 3: configure preset "gcc-debug"
@@ -239,10 +258,11 @@ Test project /path/to/repo/.build/gcc-debug
 
 Total Test time (real) =   0.04 sec
 ```
+<!-- markdownlint-enable -->
 
 </details>
 
-
+<!-- markdownlint-disable -->
 <details>
 <summary> Install beman.iterator_interface (verbose logs - gcc-release) </summary>
 
@@ -332,8 +352,8 @@ $ tree /opt/beman.iterator_interface
     └── libbeman.iterator_interface.a
 
 8 directories, 9 files
-
 ```
+<!-- markdownlint-enable -->
 
 </details>
 
@@ -342,6 +362,7 @@ $ tree /opt/beman.iterator_interface
 ##### Default Build
 
 CI current build and test flows:
+
 ```shell
 # Configure.
 $ cmake -G "Ninja Multi-Config" \
@@ -391,8 +412,10 @@ $ tree /opt/beman.iterator_interface
 8 directories, 9 files
 ```
 
+<!-- markdownlint-disable -->
 <details>
 <summary> Build beman.iterator_interface and tests (verbose logs) </summary>
+<!-- markdownlint-enable -->
 
 ```shell
 # Configure build: default build production code + tests (BEMAN_ITERATOR_INTERFACE_BUILD_TESTING=ON).
@@ -418,11 +441,13 @@ Test project /path/to/repo/.build
 
 Total Test time (real) =   0.67 sec
 ```
+
 </details>
 
 ##### Skip Tests
 
-By default, we build and run tests. You can provide `-DBEMAN_ITERATOR_INTERFACE_BUILD_TESTING=OFF` and completely disable building tests:
+By default, we build and run tests. You can provide
+`-DBEMAN_ITERATOR_INTERFACE_BUILD_TESTING=OFF` and completely disable building tests:
 
 ```shell
 # Configure.
@@ -435,7 +460,8 @@ $ cmake -G "Ninja Multi-Config" \
 
 ##### Skip Examples
 
-By default, we build and run tests. You can provide `-DBEMAN_ITERATOR_INTERFACE_BUILD_EXAMPLES=OFF` and completely disable building tests:
+By default, we build and run tests. You can provide
+`-DBEMAN_ITERATOR_INTERFACE_BUILD_EXAMPLES=OFF` and completely disable building tests:
 
 ```shell
 # Configure.
@@ -445,4 +471,3 @@ $ cmake -G "Ninja Multi-Config" \
       -DBEMAN_ITERATOR_INTERFACE_BUILD_EXAMPLES=OFF \
       -B .build -S .
 ```
-

@@ -21,6 +21,6 @@ struct iterator_interface_access {
         return d.base_reference();
     }
 };
-}
-}
+} // namespace iterator_interface
+} // namespace beman
 #endif

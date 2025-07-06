@@ -10,7 +10,8 @@ include(CheckCXXSourceCompiles)
 # Determines if the selected C++ compiler has deducing this support. Sets
 # 'result_var' to whether support is detected.
 function(beman_iterator_check_deducing_this result_var)
-  check_cxx_source_compiles( "
+    check_cxx_source_compiles(
+        "
 // clang-specific check due to http://github.com/llvm/llvm-project/issues/113174
 // MSVC-specific check due to https://developercommunity.visualstudio.com/t/10107077
 #if defined(__cpp_explicit_this_parameter)
@@ -26,6 +27,8 @@ function(beman_iterator_check_deducing_this result_var)
   #endif
 #endif
 int main(){}
-" HAVE_DEDUCING_THIS )
-  set(${result_var} ${HAVE_DEDUCING_THIS} PARENT_SCOPE)
+"
+        HAVE_DEDUCING_THIS
+    )
+    set(${result_var} ${HAVE_DEDUCING_THIS} PARENT_SCOPE)
 endfunction()

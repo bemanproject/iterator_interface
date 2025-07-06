@@ -28,7 +28,8 @@ namespace stl_interfaces {
     this template implies a copy or move of the underlying object of type
     `T`. */
 template <typename T>
-#if defined(BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_DOXYGEN) || BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_USE_CONCEPTS
+#if defined(BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_DOXYGEN) || \
+    BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_USE_CONCEPTS
 // clang-format off
         requires std::is_object_v<T>
 #endif
@@ -99,7 +100,9 @@ struct common_eq {
 };
 template <typename T, typename U>
 struct common_eq<T, U, true> {
-    static constexpr auto call(T lhs, U rhs) { return iterator_interface_access::base(lhs) == iterator_interface_access::base(rhs); }
+    static constexpr auto call(T lhs, U rhs) {
+        return iterator_interface_access::base(lhs) == iterator_interface_access::base(rhs);
+    }
 };
 
 template <typename T, typename U>
@@ -213,7 +216,7 @@ BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_NAMESPACE_V1 {
         template <typename D = Derived>
         constexpr auto operator->() const
             noexcept(noexcept(detail::make_pointer<pointer, reference>(*std::declval<const D&>())))
-            -> decltype(detail::make_pointer<pointer, reference>(*std::declval<const D&>())) {
+                -> decltype(detail::make_pointer<pointer, reference>(*std::declval<const D&>())) {
             return detail::make_pointer<pointer, reference>(*derived());
         }
 
@@ -249,7 +252,8 @@ BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_NAMESPACE_V1 {
         }
 
         template <typename D = Derived>
-        constexpr auto operator+=(difference_type n) noexcept(noexcept(iterator_interface_access::base(std::declval<D&>()) += n))
+        constexpr auto
+        operator+=(difference_type n) noexcept(noexcept(iterator_interface_access::base(std::declval<D&>()) += n))
             -> decltype(iterator_interface_access::base(std::declval<D&>()) += n, std::declval<D&>()) {
             iterator_interface_access::base(derived()) += n;
             return derived();
@@ -263,8 +267,8 @@ BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_NAMESPACE_V1 {
             retval += i;
             return retval;
         }
-        friend BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_HIDDEN_FRIEND_CONSTEXPR Derived operator+(difference_type i,
-                                                                                                Derived it) noexcept {
+        friend BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_HIDDEN_FRIEND_CONSTEXPR Derived
+        operator+(difference_type i, Derived it) noexcept {
             return it + i;
         }
 
@@ -299,8 +303,10 @@ BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_NAMESPACE_V1 {
 
         template <typename D = Derived>
         constexpr auto operator-(D other) const
-            noexcept(noexcept(iterator_interface_access::base(std::declval<const D&>()) - iterator_interface_access::base(other)))
-                -> decltype(iterator_interface_access::base(std::declval<const D&>()) - iterator_interface_access::base(other)) {
+            noexcept(noexcept(iterator_interface_access::base(std::declval<const D&>()) -
+                              iterator_interface_access::base(other)))
+                -> decltype(iterator_interface_access::base(std::declval<const D&>()) -
+                            iterator_interface_access::base(other)) {
             return iterator_interface_access::base(derived()) - iterator_interface_access::base(other);
         }
 
@@ -402,7 +408,8 @@ BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_NAMESPACE_V1 {
 } // namespace stl_interfaces
 } // namespace beman::iterator_interface::detail
 
-#if defined(BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_DOXYGEN) || BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_USE_CONCEPTS
+#if defined(BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_DOXYGEN) || \
+    BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_USE_CONCEPTS
 
 namespace beman::iterator_interface::detail {
 namespace stl_interfaces {
@@ -727,7 +734,8 @@ BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_NAMESPACE_V2 {
 
 #endif
 
-#if defined(BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_DOXYGEN) || BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_USE_DEDUCED_THIS
+#if defined(BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_DOXYGEN) || \
+    BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_USE_DEDUCED_THIS
 
 namespace beman::iterator_interface::detail {
 namespace stl_interfaces {
@@ -954,7 +962,7 @@ BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_NAMESPACE_V3 {
 #define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_CONCEPT(iter, concept_name)
 #endif
 
-#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_ITERATOR_TRAITS_IMPL(                    \
+#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_ITERATOR_TRAITS_IMPL(            \
     iter, category, value_t, ref, ptr, diff_t)                                                        \
     static_assert(std::is_same<typename std::iterator_traits<iter>::value_type, value_t>::value, ""); \
     static_assert(std::is_same<typename std::iterator_traits<iter>::reference, ref>::value, "");      \
@@ -962,7 +970,7 @@ BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_NAMESPACE_V3 {
     static_assert(std::is_same<typename std::iterator_traits<iter>::difference_type, diff_t>::value, "");
 
 #define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_ITERATOR_TRAITS(  \
-    iter, category, concept, value_type, reference, pointer, difference_type)  \
+    iter, category, concept, value_type, reference, pointer, difference_type)          \
     BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_ITERATOR_TRAITS_IMPL( \
         iter, category, value_type, reference, pointer, difference_type)
 #endif
