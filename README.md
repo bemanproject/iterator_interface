@@ -11,7 +11,7 @@ SPDX-License-Identifier: 2.0 license with LLVM exceptions
 **Implements**: [`std::iterator_interface` (P2727R4)](https://wg21.link/P2727R4)
 
 <!-- markdownlint-disable -->
-**Status**: [Under development and not yet ready for production use.](https://github.com/bemanproject/beman/blob/main/docs/BEMAN_LIBRARY_MATURITY_MODEL.md#under-development-and-not-yet-ready-for-production-use)
+**Status**: [Under development and not yet ready for production use.](https://github.com/bemanproject/beman/blob/main/docs/beman_library_maturity_model.md#under-development-and-not-yet-ready-for-production-use)
 <!-- markdownlint-enable -->
 
 Source is licensed with the Apache 2.0 license with LLVM exceptions
