@@ -162,10 +162,9 @@ struct AlwaysIterator
     auto operator-(AlwaysIterator other) const { return n_ - other.n_; }
 
   private:
-    ClassWithMemberFunction value_;
-    const char*             first_;
-    difference_type         size_;
-    difference_type         n_;
+    ClassWithMemberFunction          value_;
+    [[maybe_unused]] difference_type size_;
+    difference_type                  n_;
 };
 
 // Confirm operator-> works as expected

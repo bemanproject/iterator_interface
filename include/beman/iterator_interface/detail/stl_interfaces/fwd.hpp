@@ -12,26 +12,26 @@
 #include <beman/iterator_interface/detail/stl_interfaces/config.hpp>
 
 #if BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_USE_CONCEPTS
-#include <ranges>
+    #include <ranges>
 #endif
 #if defined(__cpp_lib_three_way_comparison)
-#include <compare>
+    #include <compare>
 #endif
 
 #ifndef BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_DOXYGEN
 
-#if defined(_MSC_VER) || defined(__GNUC__) && __GNUC__ < 8
-#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_NO_HIDDEN_FRIEND_CONSTEXPR
-#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_HIDDEN_FRIEND_CONSTEXPR
-#else
-#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_HIDDEN_FRIEND_CONSTEXPR constexpr
-#endif
+    #if defined(_MSC_VER) || defined(__GNUC__) && __GNUC__ < 8
+        #define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_NO_HIDDEN_FRIEND_CONSTEXPR
+        #define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_HIDDEN_FRIEND_CONSTEXPR
+    #else
+        #define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_HIDDEN_FRIEND_CONSTEXPR constexpr
+    #endif
 
-#if defined(__GNUC__) && __GNUC__ < 9
-#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_CONCEPT concept bool
-#else
-#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_CONCEPT concept
-#endif
+    #if defined(__GNUC__) && __GNUC__ < 9
+        #define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_CONCEPT concept bool
+    #else
+        #define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_CONCEPT concept
+    #endif
 
 #endif
 

@@ -1,41 +1,23 @@
 # beman.iterator_interface: iterator creation mechanisms
 
 <!--
-SPDX-License-Identifier: 2.0 license with LLVM exceptions
+SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 -->
 
-<!-- markdownlint-disable -->
-![Library Status](https://raw.githubusercontent.com/bemanproject/beman/refs/heads/main/images/badges/beman_badge-beman_library_under_development.svg) <img src="https://github.com/bemanproject/beman/blob/main/images/logos/beman_logo-beman_library_under_development.png" style="width:5%; height:auto;"> ![CI Tests](https://github.com/bemanproject/iterator_interface/actions/workflows/ci.yml/badge.svg) ![Standard Target](https://github.com/bemanproject/beman/blob/main/images/badges/cpp29.svg)
-<!-- markdownlint-enable -->
+<!-- markdownlint-disable-next-line line-length -->
+![Library Status](https://raw.githubusercontent.com/bemanproject/beman/refs/heads/main/images/badges/beman_badge-beman_library_under_development.svg) ![Continuous Integration Tests](https://github.com/bemanproject/iterator_interface/actions/workflows/ci_tests.yml/badge.svg) ![Lint Check (pre-commit)](https://github.com/bemanproject/iterator_interface/actions/workflows/pre-commit-check.yml/badge.svg) [![Coverage](https://coveralls.io/repos/github/bemanproject/iterator_interface/badge.svg?branch=main)](https://coveralls.io/github/bemanproject/iterator_interface?branch=main) ![Standard Target](https://github.com/bemanproject/beman/blob/main/images/badges/cpp29.svg)
 
 **Implements**: [`std::iterator_interface` (P2727R4)](https://wg21.link/P2727R4)
 
-<!-- markdownlint-disable -->
 **Status**: [Under development and not yet ready for production use.](https://github.com/bemanproject/beman/blob/main/docs/beman_library_maturity_model.md#under-development-and-not-yet-ready-for-production-use)
-<!-- markdownlint-enable -->
 
 ## License
 
-beman.iterator_interface is licensed under the Apache License v2.0 with LLVM Exceptions.
+`beman.iterator_interface` is licensed under the Apache License v2.0 with LLVM Exceptions.
 
-// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+## Usage
 
-Documentation and associated papers are licensed with the Creative Commons
-Attribution 4.0 International license.
-
-// SPDX-License-Identifier: CC-BY-4.0
-
-The intent is that the source and documentation are available for use by people
-implementing their iterator types.
-
-The README itself is licensed with CC0 1.0 Universal. Copy the contents and
-incorporate in your own work as you see fit.
-
-// SPDX-License-Identifier: CC0-1.0
-
-## Examples
-
-Full runnable examples can be found in `examples/` - please check
+Full runnable examples can be found in [`examples/`](examples/) - please check
 [examples/README.md](./examples/README.md) for building the code on local setup
 or on Compiler Explorer.
 
@@ -133,343 +115,116 @@ std::cout << "\n";
 ```
 <!-- markdownlint-enable -->
 
-## How to Build
+## Dependencies
 
-### Compiler Support
+### Build Environment
 
-This is a modern C++ project which can be compiled with the latest C++ standards
-(**C++20 or later**).
+This project requires at least the following to build:
 
-Default build: `C++23`. Please check `etc/${compiler}-flags.cmake`.
+* A C++ compiler that conforms to the C++20 standard or greater
+* CMake 3.30 or later
+* (Test Only) GoogleTest
 
-### Dependencies
+You can disable building tests by setting CMake option `BEMAN_ITERATOR_INTERFACE_BUILD_TESTS` to
+`OFF` when configuring the project.
 
-This project is mainly tested on `Ubuntu 22.04` and `Ubuntu 24.04`, but it
-should be as portable as CMake is. This project has no C or C++ dependencies.
+### Supported Platforms
 
-Build-time dependencies:
+| Compiler | Version | C++ Standards | Standard Library  |
+|----------|---------|---------------|-------------------|
+| GCC      | 14-13   | C++26-C++20   | libstdc++         |
+| GCC      | 12      | C++23, C++20  | libstdc++         |
+| Clang    | 22-19   | C++26-C++20   | libstdc++, libc++ |
+| Clang    | 18      | C++26-C++20   | libc++            |
+| Clang    | 18      | C++23, C++20  | libstdc++         |
+| Clang    | 17      | C++26-C++20   | libc++            |
+| Clang    | 17      | C++20         | libstdc++         |
 
-* `cmake`
-* `ninja`, `make`, or another CMake-supported build system
-  * CMake defaults to "Unix Makefiles" on POSIX systems
+## Development
 
-Example of installation on `Ubuntu 24.04`:
+See the [Contributing Guidelines](CONTRIBUTING.md).
 
-```shell
-# Install tools:
-apt-get install -y cmake make ninja-build
+## Integrate beman.iterator_interface into your project
 
-# Example of toolchains:
-apt-get install                             \
-    g++-14 gcc-14 gcc-13 g++-14             \
-    clang-18 clang++-18 clang-17 clang++-17
+### Build
+
+You can build iterator_interface using a CMake workflow preset:
+
+```bash
+cmake --workflow --preset gcc-release
 ```
 
-### Instructions
+To list available workflow presets, you can invoke:
 
-#### Preset CMake Workflows
-
-This project strives to be as normal and simple a CMake project as possible. This
-build workflow in particular will work, producing a static
-`beman.iterator_interface` library, ready to package:
-
-<!-- markdownlint-disable -->
-```shell
-$ cmake --workflow --preset gcc-debug
-$ cmake --workflow --preset gcc-release
-$ cmake --install .build/gcc-release --prefix /opt/beman.iterator_interface
-
-$ tree /opt/beman.iterator_interface
-├── bin      # examples (check: BEMAN_ITERATOR_INTERFACE_BUILD_EXAMPLES - default: ON)
-│   ├── beman.iterator_interface.examples.filter_int_iterator
-│   └── beman.iterator_interface.examples.repeated_chars_iterator
-├── include  # public API
-│   └── beman
-│       └── iterator_interface
-│           ├── config.hpp
-│           ├── detail
-│           │   └── stl_interfaces
-│           │       ├── config.hpp
-│           │       ├── fwd.hpp
-│           │       └── iterator_interface.hpp
-│           ├── iterator_interface.hpp
-│           └── iterator_interface_access.hpp
-└── lib     # actual library implementation
-    └── libbeman.iterator_interface.a
-
-8 directories, 9 files
+```bash
+cmake --list-presets=workflow
 ```
 
-<details>
-<summary> Build beman.iterator_interface (verbose logs - gcc-debug) </summary>
-<!-- markdownlint-enable -->
+For details on building beman.iterator_interface without using a CMake preset, refer to the
+[Contributing Guidelines](CONTRIBUTING.md).
 
-This should build and run the tests with system GCC with the address and
-undefined behavior sanitizers enabled.
+### Installation
 
-<!-- markdownlint-disable -->
-```shell
-$ cmake --workflow --preset gcc-debug
-Executing workflow step 1 of 3: configure preset "gcc-debug"
+To install beman.iterator_interface globally after building with the `gcc-release` preset, you can
+run:
 
-Preset CMake variables:
-
-  CMAKE_BUILD_TYPE="Debug"
-  CMAKE_CXX_COMPILER="g++"
-  CMAKE_CXX_FLAGS="-fsanitize=address -fsanitize=pointer-compare -fsanitize=pointer-subtract -fsanitize=leak -fsanitize=undefined"
-  CMAKE_CXX_STANDARD="17"
-
--- The CXX compiler identification is GNU 13.2.0
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: /usr/bin/g++ - skipped
--- Detecting CXX compile features
--- Detecting CXX compile features - done
--- Performing Test HAVE_DEDUCING_THIS
--- Performing Test HAVE_DEDUCING_THIS - Failed
--- The C compiler identification is GNU 13.2.0
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - done
--- Check for working C compiler: /usr/bin/cc - skipped
--- Detecting C compile features
--- Detecting C compile features - done
--- Performing Test CMAKE_HAVE_LIBC_PTHREAD
--- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
--- Found Threads: TRUE
--- Configuring done (2.7s)
--- Generating done (0.0s)
--- Build files have been written to: /path/to/repo/.build/gcc-debug
-
-Executing workflow step 2 of 3: build preset "gcc-debug"
-
-[15/15] Linking CXX executable tests/beman/iterator_interface/beman.iterator_interface.tests
-
-Executing workflow step 3 of 3: test preset "gcc-debug"
-
-Test project /path/to/repo/.build/gcc-debug
-    Start 1: IteratorTest.TestGTest
-1/4 Test #1: IteratorTest.TestGTest ...........   Passed    0.01 sec
-    Start 2: IteratorTest.TestRepeatedChars
-2/4 Test #2: IteratorTest.TestRepeatedChars ...   Passed    0.01 sec
-    Start 3: IteratorTest.TestFilteredIter
-3/4 Test #3: IteratorTest.TestFilteredIter ....   Passed    0.01 sec
-    Start 4: IteratorTest.OperatorArrow
-4/4 Test #4: IteratorTest.OperatorArrow .......   Passed    0.01 sec
-
-100% tests passed, 0 tests failed out of 4
-
-Total Test time (real) =   0.04 sec
+```bash
+sudo cmake --install build/gcc-release
 ```
-<!-- markdownlint-enable -->
 
-</details>
+Alternatively, to install to a prefix, for example `/opt/beman`, you can run:
 
-<!-- markdownlint-disable -->
-<details>
-<summary> Install beman.iterator_interface (verbose logs - gcc-release) </summary>
+```bash
+sudo cmake --install build/gcc-release --prefix /opt/beman
+```
 
-```shell
-# Build release.
-$ cmake --workflow --preset gcc-release
-Executing workflow step 1 of 3: configure preset "gcc-release"
+This will generate the following directory structure:
 
-Preset CMake variables:
-
-  CMAKE_BUILD_TYPE="RelWithDebInfo"
-  CMAKE_CXX_COMPILER="g++"
-  CMAKE_CXX_FLAGS="-O3"
-  CMAKE_CXX_STANDARD="17"
-
--- The CXX compiler identification is GNU 13.2.0
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: /usr/bin/g++ - skipped
--- Detecting CXX compile features
--- Detecting CXX compile features - done
--- Performing Test HAVE_DEDUCING_THIS
--- Performing Test HAVE_DEDUCING_THIS - Failed
--- The C compiler identification is GNU 13.2.0
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - done
--- Check for working C compiler: /usr/bin/cc - skipped
--- Detecting C compile features
--- Detecting C compile features - done
--- Performing Test CMAKE_HAVE_LIBC_PTHREAD
--- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
--- Found Threads: TRUE
--- Configuring done (2.7s)
--- Generating done (0.0s)
--- Build files have been written to: /path/to/repo/.build/gcc-release
-
-Executing workflow step 2 of 3: build preset "gcc-release"
-
-[15/15] Linking CXX executable tests/beman/iterator_interface/beman.iterator_interface.tests
-
-Executing workflow step 3 of 3: test preset "gcc-release"
-
-Test project /path/to/repo/.build/gcc-release
-    Start 1: IteratorTest.TestGTest
-1/4 Test #1: IteratorTest.TestGTest ...........   Passed    0.00 sec
-    Start 2: IteratorTest.TestRepeatedChars
-2/4 Test #2: IteratorTest.TestRepeatedChars ...   Passed    0.00 sec
-    Start 3: IteratorTest.TestFilteredIter
-3/4 Test #3: IteratorTest.TestFilteredIter ....   Passed    0.00 sec
-    Start 4: IteratorTest.OperatorArrow
-4/4 Test #4: IteratorTest.OperatorArrow .......   Passed    0.00 sec
-
-100% tests passed, 0 tests failed out of 4
-
-# Install build artifacts from `build` directory into `/opt/beman.iterator_interface` path.
-$ cmake --install .build/gcc-release --prefix /opt/beman.iterator_interface
--- Install configuration: "RelWithDebInfo"
--- Installing: /opt/beman.iterator_interface/lib/libbeman.iterator_interface.a
--- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/iterator_interface.hpp
--- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/iterator_interface_access.hpp
--- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/detail/stl_interfaces/config.hpp
--- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/detail/stl_interfaces/fwd.hpp
--- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/detail/stl_interfaces/iterator_interface.hpp
--- Installing: /opt/beman.iterator_interface/bin/beman.iterator_interface.examples.filter_int_iterator
--- Installing: /opt/beman.iterator_interface/bin/beman.iterator_interface.examples.repeated_chars_iterator
--- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/config.hpp
-
-
-# Check tree.
-$ tree /opt/beman.iterator_interface
-/opt/beman.iterator_interface
-├── bin
-│   ├── beman.iterator_interface.examples.filter_int_iterator
-│   └── beman.iterator_interface.examples.repeated_chars_iterator
+```txt
+/opt/beman
 ├── include
-│   └── beman
-│       └── iterator_interface
-│           ├── config.hpp
-│           ├── detail
-│           │   └── stl_interfaces
-│           │       ├── config.hpp
-│           │       ├── fwd.hpp
-│           │       └── iterator_interface.hpp
-│           ├── iterator_interface.hpp
-│           └── iterator_interface_access.hpp
+│   └── beman
+│       └── iterator_interface
+│           ├── iterator_interface.hpp
+│           └── ...
 └── lib
-    └── libbeman.iterator_interface.a
-
-8 directories, 9 files
-```
-<!-- markdownlint-enable -->
-
-</details>
-
-#### Custom CMake Flows
-
-##### Default Build
-
-CI current build and test flows:
-
-```shell
-# Configure.
-$ cmake -G "Ninja Multi-Config" \
-      -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Asan" \
-      -DCMAKE_TOOLCHAIN_FILE=etc/clang-19-toolchain.cmake \
-      -B .build -S .
-
-# Build with config Asan.
-$ cmake --build .build --config Asan --target all -- -k 0
-# Build with config RelWithDebInfo.
-$ cmake --build .build --config RelWithDebInfo  --target all -- -k 0
-
-# Run tests with config Asan..
-$ ctest --build-config Asan --output-on-failure --test-dir .build
-
-# Install library (default: config set to RelWithDebInfo).
-$ cmake --install .build/ --prefix /opt/beman.iterator_interface
--- Install configuration: "RelWithDebInfo"
--- Installing: /opt/beman.iterator_interface/lib/libbeman.iterator_interface.a
--- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/iterator_interface.hpp
--- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/iterator_interface_access.hpp
--- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/detail/stl_interfaces/config.hpp
--- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/detail/stl_interfaces/fwd.hpp
--- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/detail/stl_interfaces/iterator_interface.hpp
--- Installing: /opt/beman.iterator_interface/bin/beman.iterator_interface.examples.filter_int_iterator
--- Installing: /opt/beman.iterator_interface/bin/beman.iterator_interface.examples.repeated_chars_iterator
--- Installing: /opt/beman.iterator_interface/include/beman/iterator_interface/config.hpp
-$ tree /opt/beman.iterator_interface
-/opt/beman.iterator_interface
-├── bin
-│   ├── beman.iterator_interface.examples.filter_int_iterator
-│   └── beman.iterator_interface.examples.repeated_chars_iterator
-├── include
-│   └── beman
-│       └── iterator_interface
-│           ├── config.hpp
-│           ├── detail
-│           │   └── stl_interfaces
-│           │       ├── config.hpp
-│           │       ├── fwd.hpp
-│           │       └── iterator_interface.hpp
-│           ├── iterator_interface.hpp
-│           └── iterator_interface_access.hpp
-└── lib
-    └── libbeman.iterator_interface.a
-
-8 directories, 9 files
+    └── cmake
+        └── beman.iterator_interface
+            ├── beman.iterator_interface-config-version.cmake
+            ├── beman.iterator_interface-config.cmake
+            └── beman.iterator_interface-targets.cmake
 ```
 
-<!-- markdownlint-disable -->
-<details>
-<summary> Build beman.iterator_interface and tests (verbose logs) </summary>
-<!-- markdownlint-enable -->
+### CMake Configuration
 
-```shell
-# Configure build: default build production code + tests (BEMAN_ITERATOR_INTERFACE_BUILD_TESTING=ON).
-$ cmake -G "Ninja Multi-Config" \
-      -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Asan" \
-      -DCMAKE_TOOLCHAIN_FILE=etc/clang-19-toolchain.cmake \
-      -B .build -S .
--- The CXX compiler identification is Clang 19.0.0
-...
--- Build files have been written to: /path/to/repo/.build
+If you installed beman.iterator_interface to a prefix, you can specify that prefix to your CMake
+project using `CMAKE_PREFIX_PATH`; for example, `-DCMAKE_PREFIX_PATH=/opt/beman`.
 
-# Build.
-$ cmake --build .build --config Asan --target all -- -k 0
-...
-[12/12] Linking CXX executable ... # Note: 12 targets here (including tests).
+You need to bring in the `beman.iterator_interface` package to define the `beman::iterator_interface` CMake
+target:
 
-# Run tests.
-$ ctest --build-config Asan --output-on-failure --test-dir .build
-Internal ctest changing into directory: /path/to/repo/.build
-Test project /path/to/repo/.build
-...
-100% tests passed, 0 tests failed out of 82
-
-Total Test time (real) =   0.67 sec
+```cmake
+find_package(beman.iterator_interface REQUIRED)
 ```
 
-</details>
+You will then need to add `beman::iterator_interface` to the link libraries of any libraries or
+executables that include `beman.iterator_interface` headers.
 
-##### Skip Tests
-
-By default, we build and run tests. You can provide
-`-DBEMAN_ITERATOR_INTERFACE_BUILD_TESTING=OFF` and completely disable building tests:
-
-```shell
-# Configure.
-$ cmake -G "Ninja Multi-Config" \
-      -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Asan" \
-      -DCMAKE_TOOLCHAIN_FILE=etc/clang-19-toolchain.cmake \
-      -DBEMAN_ITERATOR_INTERFACE_BUILD_TESTING=OFF \
-      -B .build -S .
+```cmake
+target_link_libraries(yourlib PUBLIC beman::iterator_interface)
 ```
 
-##### Skip Examples
+### Using beman.iterator_interface
 
-By default, we build and run tests. You can provide
-`-DBEMAN_ITERATOR_INTERFACE_BUILD_EXAMPLES=OFF` and completely disable building tests:
+To use `beman.iterator_interface` in your C++ project,
+include an appropriate `beman.iterator_interface` header from your source code.
 
-```shell
-# Configure.
-$ cmake -G "Ninja Multi-Config" \
-      -DCMAKE_CONFIGURATION_TYPES="RelWithDebInfo;Asan" \
-      -DCMAKE_TOOLCHAIN_FILE=etc/clang-19-toolchain.cmake \
-      -DBEMAN_ITERATOR_INTERFACE_BUILD_EXAMPLES=OFF \
-      -B .build -S .
+```c++
+#include <beman/iterator_interface/iterator_interface.hpp>
 ```
+
+> [!NOTE]
+>
+> `beman.iterator_interface` headers are to be included with the `beman/iterator_interface/` prefix.
+> Altering include search paths to spell the include target another way (e.g.
+> `#include <iterator_interface.hpp>`) is unsupported.

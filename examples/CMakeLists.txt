@@ -1,34 +1,16 @@
-# cmake-format: off
-# examples/CMakeLists.txt -*-cmake-*-
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
-# cmake-format: on
 
-# List of all buildable examples.
-set(EXAMPLES filter_int_iterator repeated_chars_iterator)
+set(ALL_EXAMPLES filter_int_iterator repeated_chars_iterator)
+message("Examples to be built: ${ALL_EXAMPLES}")
 
-foreach(example ${EXAMPLES})
-    # Add example executable.
-    add_executable(beman.iterator_interface.examples.${example} "")
-
-    # Add example source file.
+foreach(example ${ALL_EXAMPLES})
+    add_executable(beman.iterator_interface.examples.${example})
     target_sources(
         beman.iterator_interface.examples.${example}
         PRIVATE ${example}.cpp
     )
-
-    # Link example with the library.
     target_link_libraries(
         beman.iterator_interface.examples.${example}
-        beman::iterator_interface
-    )
-
-    # Install.
-    install(
-        TARGETS
-            beman.iterator_interface.examples.${example}
-            COMPONENT
-            beman.iterator_interface.examples
-            DESTINATION
-            ${CMAKE_INSTALL_BINDIR}
+        PRIVATE beman::iterator_interface
     )
 endforeach()

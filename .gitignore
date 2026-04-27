@@ -1,27 +1,12 @@
-cmake.bld
-compile_commands.json
-/.build/
-/.cache/
-*.pyg
-/.vscode/
-/papers/**/generated/
-/papers/**/.venv/
-/papers/**/_minted-*/
-/papers/**/*.aux
-/papers/**/*.bbl
-/papers/**/*.blg
-/papers/**/*.dvi
-/papers/**/*.fdb_latexmk
-/papers/**/*.fls
-/papers/**/*.log
-/papers/**/*.out
-/papers/**/*.pdf
-/papers/**/*.toc
-/papers/**/*.idx
-/papers/**/*.xtr
-/papers/**/.deps/
-/papers/**/_minted-view-maybe.work/
-/papers/**/.venv.work/
-/papers/**/_minted-optional_ref/
-/papers/**/_minted-optional_ref_wording/
-.update-submodules
+# SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+
+/.cache
+/compile_commands.json
+/build
+
+# ignore emacs temp files
+*~
+\#*\#
+
+# ignore vscode settings
+.vscode

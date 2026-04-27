@@ -1,24 +1,23 @@
-# cmake-format: off
-# CMakeLists.txt -*-CMake-*-
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
-# cmake-format: on
 
-cmake_minimum_required(VERSION 3.27...3.31)
+cmake_minimum_required(VERSION 3.30...4.3)
 
-project(beman.iterator_interface VERSION 0.0.0 LANGUAGES CXX)
+project(
+    beman.iterator_interface # CMake Project Name, which is also the name of the top-level
+    # targets (e.g., library, executable, etc.).
+    DESCRIPTION "iterator creation mechanisms"
+    LANGUAGES CXX
+    VERSION 0.1.0
+)
 
 # Local helpers: required to include CompilerFeatureTest.
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 # Includes
-include(CTest)
-include(FetchContent)
 include(CompilerFeatureTest)
 
 # Prechecks.
 beman_iterator_check_deducing_this(COMPILER_SUPPORTS_DEDUCING_THIS)
-
-set(TARGETS_EXPORT_NAME ${CMAKE_PROJECT_NAME}Targets)
 
 option(
     BEMAN_ITERATOR_INTERFACE_USE_DEDUCING_THIS
@@ -26,15 +25,17 @@ option(
     ${COMPILER_SUPPORTS_DEDUCING_THIS}
 )
 
+# [CMAKE.SKIP_TESTS]
 option(
     BEMAN_ITERATOR_INTERFACE_BUILD_TESTS
-    "Enable building tests and test infrastructure. Default: ON. Values: {ON, OFF}."
+    "Enable building tests and test infrastructure. Default: ${PROJECT_IS_TOP_LEVEL}. Values: { ON, OFF }."
     ${PROJECT_IS_TOP_LEVEL}
 )
 
+# [CMAKE.SKIP_EXAMPLES]
 option(
     BEMAN_ITERATOR_INTERFACE_BUILD_EXAMPLES
-    "Enable building examples. Default: ON. Values: {ON, OFF}."
+    "Enable building examples. Default: ${PROJECT_IS_TOP_LEVEL}. Values: { ON, OFF }."
     ${PROJECT_IS_TOP_LEVEL}
 )
 
@@ -44,7 +45,7 @@ if(
 )
     message(
         WARNING
-        "Building with  C++23 \"deducing this\" feature (P0847R7) despite of the compiler's lack of actual support for it."
+        "Building with C++23 \"deducing this\" feature (P0847R7) despite of the compiler's lack of actual support for it."
     )
 endif()
 
@@ -54,33 +55,31 @@ configure_file(
     @ONLY
 )
 
-if(BEMAN_ITERATOR_INTERFACE_BUILD_TESTS)
-    # Fetch GoogleTest
-    FetchContent_Declare(
-        googletest
-        EXCLUDE_FROM_ALL
-        GIT_REPOSITORY https://github.com/google/googletest.git
-        GIT_TAG
-            e39786088138f2749d64e9e90e0f9902daa77c40 # release-1.15.0
-    )
-    FetchContent_MakeAvailable(googletest)
-endif()
+# for find of beman_install_library and configure_build_telemetry
+include(infra/cmake/beman-install-library.cmake)
+include(infra/cmake/BuildTelemetryConfig.cmake)
 
-# Create the library target and named header set for beman.iterator_interface
-add_library(beman.iterator_interface STATIC)
+add_library(beman.iterator_interface INTERFACE)
 add_library(beman::iterator_interface ALIAS beman.iterator_interface)
 
 target_sources(
     beman.iterator_interface
     PUBLIC
-        FILE_SET beman_iterator_interface_headers
-        TYPE HEADERS
-        BASE_DIRS ${PROJECT_BINARY_DIR}/include ${PROJECT_SOURCE_DIR}/include
-        FILES ${PROJECT_BINARY_DIR}/include/beman/iterator_interface/config.hpp
+        FILE_SET HEADERS
+            BASE_DIRS
+                "${CMAKE_CURRENT_SOURCE_DIR}/include"
+                "${PROJECT_BINARY_DIR}/include"
 )
 
-add_subdirectory(src/beman/iterator_interface)
+set_target_properties(
+    beman.iterator_interface
+    PROPERTIES VERIFY_INTERFACE_HEADER_SETS ${PROJECT_IS_TOP_LEVEL}
+)
+
 add_subdirectory(include/beman/iterator_interface)
+
+beman_install_library(beman.iterator_interface TARGETS beman.iterator_interface)
+configure_build_telemetry()
 
 if(BEMAN_ITERATOR_INTERFACE_BUILD_TESTS)
     enable_testing()
@@ -90,14 +89,3 @@ endif()
 if(BEMAN_ITERATOR_INTERFACE_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
-
-# Coverage
-configure_file("cmake/gcovr.cfg.in" gcovr.cfg @ONLY)
-
-add_custom_target(
-    process_coverage
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    COMMENT "Running gcovr to process coverage results"
-    COMMAND mkdir -p coverage
-    COMMAND gcovr --config gcovr.cfg .
-)

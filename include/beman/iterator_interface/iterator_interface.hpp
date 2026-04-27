@@ -7,7 +7,7 @@
 #include <beman/iterator_interface/config.hpp>
 #include <beman/iterator_interface/iterator_interface_access.hpp>
 #if !BEMAN_ITERATOR_INTERFACE_USE_DEDUCING_THIS()
-#include <beman/iterator_interface/detail/stl_interfaces/iterator_interface.hpp>
+    #include <beman/iterator_interface/detail/stl_interfaces/iterator_interface.hpp>
 #endif
 
 #include <concepts>

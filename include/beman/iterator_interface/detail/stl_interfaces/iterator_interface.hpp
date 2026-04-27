@@ -15,7 +15,7 @@
 #include <utility>
 #include <type_traits>
 #if defined(__cpp_lib_three_way_comparison)
-#include <compare>
+    #include <compare>
 #endif
 
 namespace beman::iterator_interface::detail {
@@ -926,53 +926,53 @@ BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_NAMESPACE_V3 {
 
 #ifdef BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_DOXYGEN
 
-/** `static_asserts` that type `type` models concept `concept_name`.  This is
-    useful for checking that an iterator, view, etc. that you write using one
-    of the *`_interface` templates models the right C++ concept.
+    /** `static_asserts` that type `type` models concept `concept_name`.  This is
+        useful for checking that an iterator, view, etc. that you write using one
+        of the *`_interface` templates models the right C++ concept.
 
-    For example: `BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_CONCEPT(my_iter,
-    std::input_iterator)`.
+        For example: `BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_CONCEPT(my_iter,
+        std::input_iterator)`.
 
-    \note This macro expands to nothing when `__cpp_lib_concepts` is not
-    defined. */
-#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_CONCEPT(type, concept_name)
+        \note This macro expands to nothing when `__cpp_lib_concepts` is not
+        defined. */
+    #define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_CONCEPT(type, concept_name)
 
-/** `static_asserts` that the types of all typedefs in
-    `std::iterator_traits<iter>` match the remaining macro parameters.  This
-    is useful for checking that an iterator you write using
-    `iterator_interface` has the correct iterator traits.
+    /** `static_asserts` that the types of all typedefs in
+        `std::iterator_traits<iter>` match the remaining macro parameters.  This
+        is useful for checking that an iterator you write using
+        `iterator_interface` has the correct iterator traits.
 
-    For example: `BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_ITERATOR_TRAITS(my_iter,
-    std::input_iterator_tag, std::input_iterator, int, int &, int *, std::ptrdiff_t)`.
+        For example: `BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_ITERATOR_TRAITS(my_iter,
+        std::input_iterator_tag, std::input_iterator, int, int &, int *, std::ptrdiff_t)`.
 
-    \note This macro ignores the `concept` parameter when `__cpp_lib_concepts`
-    is not defined. */
-#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_ITERATOR_TRAITS( \
-    iter, category, concept, value_type, reference, pointer, difference_type)
+        \note This macro ignores the `concept` parameter when `__cpp_lib_concepts`
+        is not defined. */
+    #define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_ITERATOR_TRAITS( \
+        iter, category, concept, value_type, reference, pointer, difference_type)
 
 #else
 
-#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_ITERATOR_CONCEPT_IMPL(type, concept_name) \
-    static_assert(concept_name<type>, "");
+    #define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_ITERATOR_CONCEPT_IMPL(type, concept_name) \
+        static_assert(concept_name<type>, "");
 
-#if BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_USE_CONCEPTS
-#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_CONCEPT(iter, concept_name) \
-    BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_ITERATOR_CONCEPT_IMPL(iter, concept_name)
-#else
-#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_CONCEPT(iter, concept_name)
-#endif
+    #if BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_USE_CONCEPTS
+        #define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_CONCEPT(iter, concept_name) \
+            BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_ITERATOR_CONCEPT_IMPL(iter, concept_name)
+    #else
+        #define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_CONCEPT(iter, concept_name)
+    #endif
 
-#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_ITERATOR_TRAITS_IMPL(            \
-    iter, category, value_t, ref, ptr, diff_t)                                                        \
-    static_assert(std::is_same<typename std::iterator_traits<iter>::value_type, value_t>::value, ""); \
-    static_assert(std::is_same<typename std::iterator_traits<iter>::reference, ref>::value, "");      \
-    static_assert(std::is_same<typename std::iterator_traits<iter>::pointer, ptr>::value, "");        \
-    static_assert(std::is_same<typename std::iterator_traits<iter>::difference_type, diff_t>::value, "");
+    #define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_ITERATOR_TRAITS_IMPL(            \
+        iter, category, value_t, ref, ptr, diff_t)                                                        \
+        static_assert(std::is_same<typename std::iterator_traits<iter>::value_type, value_t>::value, ""); \
+        static_assert(std::is_same<typename std::iterator_traits<iter>::reference, ref>::value, "");      \
+        static_assert(std::is_same<typename std::iterator_traits<iter>::pointer, ptr>::value, "");        \
+        static_assert(std::is_same<typename std::iterator_traits<iter>::difference_type, diff_t>::value, "");
 
-#define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_ITERATOR_TRAITS(  \
-    iter, category, concept, value_type, reference, pointer, difference_type)          \
-    BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_ITERATOR_TRAITS_IMPL( \
-        iter, category, value_type, reference, pointer, difference_type)
+    #define BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_ITERATOR_TRAITS(  \
+        iter, category, concept, value_type, reference, pointer, difference_type)          \
+        BEMAN_ITERATOR_INTERFACE_DETAIL_STL_INTERFACES_STATIC_ASSERT_ITERATOR_TRAITS_IMPL( \
+            iter, category, value_type, reference, pointer, difference_type)
 #endif
 
 #endif
