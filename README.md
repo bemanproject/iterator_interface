@@ -165,6 +165,17 @@ For details on building beman.iterator_interface without using a CMake preset, r
 
 ### Installation
 
+#### Vcpkg
+
+The preferred way to install iterator_interface is via vcpkg. To do so, after installing vcpkg
+itself, you need to add support for the Beman project's [vcpkg
+registry](https://github.com/bemanproject/vcpkg-registry) by configuring a
+`vcpkg-configuration.json` file (which iterator_interface [provides](vcpkg-configuration.json)).
+
+Then, simply run `vcpkg install beman-iterator-interface`.
+
+#### Manual
+
 To install beman.iterator_interface globally after building with the `gcc-release` preset, you can
 run:
 

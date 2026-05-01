@@ -13,4 +13,4 @@ target_link_libraries(
 )
 
 include(GoogleTest)
-gtest_discover_tests(beman.iterator_interface.tests)
+gtest_discover_tests(beman.iterator_interface.tests DISCOVERY_TIMEOUT 60)

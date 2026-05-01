@@ -1,0 +1,10 @@
+{
+  "name": "beman-iterator-interface",
+  "version-semver": "0.1.0",
+  "dependencies": [
+    {
+      "name": "gtest",
+      "host": true
+    }
+  ]
+}
