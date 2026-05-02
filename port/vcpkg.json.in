@@ -13,5 +13,11 @@
       "name": "vcpkg-cmake-config",
       "host": true
     }
-  ]
+  ],
+  "default-features": ["use-deducing-this"],
+  "features": {
+    "use-deducing-this": {
+      "description": "Use deducing this for CRTP-free interface (BEMAN_ITERATOR_INTERFACE_USE_DEDUCING_THIS=ON)"
+    }
+  }
 }

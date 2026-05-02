@@ -6,9 +6,16 @@ vcpkg_from_github(
     HEAD_REF main
 )
 
+vcpkg_check_features(
+    OUT_FEATURE_OPTIONS FEATURE_OPTIONS
+    FEATURES
+        use-deducing-this   BEMAN_ITERATOR_INTERFACE_USE_DEDUCING_THIS
+)
+
 vcpkg_cmake_configure(
     SOURCE_PATH "${SOURCE_PATH}"
     OPTIONS
+        ${FEATURE_OPTIONS}
         -DBEMAN_ITERATOR_INTERFACE_BUILD_TESTS=OFF
         -DBEMAN_ITERATOR_INTERFACE_BUILD_EXAMPLES=OFF
 )
