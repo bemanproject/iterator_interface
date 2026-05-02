@@ -49,8 +49,8 @@ if(
 endif()
 
 configure_file(
-    "${PROJECT_SOURCE_DIR}/include/beman/iterator_interface/config.hpp.in"
-    "${PROJECT_BINARY_DIR}/include/beman/iterator_interface/config.hpp"
+    "${PROJECT_SOURCE_DIR}/include/beman/iterator_interface/config_generated.hpp.in"
+    "${PROJECT_BINARY_DIR}/include/beman/iterator_interface/config_generated.hpp"
     @ONLY
 )
 
@@ -67,7 +67,7 @@ target_sources(
         FILE_SET HEADERS
             BASE_DIRS
                 "${CMAKE_CURRENT_SOURCE_DIR}/include"
-                "${PROJECT_BINARY_DIR}/include"
+                "${CMAKE_CURRENT_BINARY_DIR}/include"
 )
 
 set_target_properties(
