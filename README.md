@@ -4,8 +4,9 @@
 SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 -->
 
-<!-- markdownlint-disable-next-line line-length -->
-![Library Status](https://raw.githubusercontent.com/bemanproject/beman/refs/heads/main/images/badges/beman_badge-beman_library_under_development.svg) ![Continuous Integration Tests](https://github.com/bemanproject/iterator_interface/actions/workflows/ci_tests.yml/badge.svg) ![Lint Check (pre-commit)](https://github.com/bemanproject/iterator_interface/actions/workflows/pre-commit-check.yml/badge.svg) [![Coverage](https://coveralls.io/repos/github/bemanproject/iterator_interface/badge.svg?branch=main)](https://coveralls.io/github/bemanproject/iterator_interface?branch=main) ![Standard Target](https://github.com/bemanproject/beman/blob/main/images/badges/cpp29.svg)
+<!-- markdownlint-disable -->
+![Library Status](https://raw.githubusercontent.com/bemanproject/beman/refs/heads/main/images/badges/beman_badge-beman_library_under_development.svg) <img src="https://github.com/bemanproject/beman/blob/main/images/logos/beman_logo-beman_library_under_development.png" style="width:5%; height:auto;"> ![CI Tests](https://github.com/bemanproject/iterator_interface/actions/workflows/ci.yml/badge.svg) ![Standard Target](https://github.com/bemanproject/beman/blob/main/images/badges/cpp29.svg) [![Compiler Explorer Example](https://img.shields.io/badge/Try%20it%20on%20Compiler%20Explorer-grey?logo=compilerexplorer&logoColor=67c52a)](https://godbolt.org/z/Kcq9bbeWW)
+<!-- markdownlint-enable -->
 
 **Implements**: [`std::iterator_interface` (P2727R4)](https://wg21.link/P2727R4)
 
