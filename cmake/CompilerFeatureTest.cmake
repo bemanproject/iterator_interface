@@ -1,6 +1,6 @@
+# SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 # cmake-format: off
 # cmake/CompilerFeatureTest.cmake -*-cmake-*-
-# SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 # cmake-format: on
 
 # Functions that determine compiler capabilities

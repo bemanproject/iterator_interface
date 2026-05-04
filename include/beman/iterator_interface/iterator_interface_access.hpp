@@ -1,5 +1,5 @@
-// include/beman/iterator_interface/iterator_interface_access.hpp -*-C++-*-
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+// include/beman/iterator_interface/iterator_interface_access.hpp -*-C++-*-
 
 #ifndef ITERATOR_INTERFACE_ACCESSS_HPP
 #define ITERATOR_INTERFACE_ACCESSS_HPP
