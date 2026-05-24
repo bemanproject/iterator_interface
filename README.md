@@ -4,9 +4,13 @@
 SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 -->
 
-<!-- markdownlint-disable -->
-![Library Status](https://raw.githubusercontent.com/bemanproject/beman/refs/heads/main/images/badges/beman_badge-beman_library_under_development.svg) <img src="https://github.com/bemanproject/beman/blob/main/images/logos/beman_logo-beman_library_under_development.png" style="width:5%; height:auto;"> ![CI Tests](https://github.com/bemanproject/iterator_interface/actions/workflows/ci.yml/badge.svg) ![Standard Target](https://github.com/bemanproject/beman/blob/main/images/badges/cpp29.svg) [![Compiler Explorer Example](https://img.shields.io/badge/Try%20it%20on%20Compiler%20Explorer-grey?logo=compilerexplorer&logoColor=67c52a)](https://godbolt.org/z/Kcq9bbeWW)
-<!-- markdownlint-enable -->
+<!-- markdownlint-disable line-length -->
+[![Library Status](https://raw.githubusercontent.com/bemanproject/beman/refs/heads/main/images/badges/beman_badge-beman_library_under_development.svg)](https://github.com/bemanproject/beman/blob/main/docs/beman_library_maturity_model.md#the-beman-library-maturity-model)
+<img src="https://github.com/bemanproject/beman/blob/main/images/logos/beman_logo-beman_library_under_development.png" style="width:5%; height:auto;">
+[![CI Tests](https://github.com/bemanproject/iterator_interface/actions/workflows/ci.yml/badge.svg)](https://github.com/bemanproject/iterator_interface/actions/workflows/ci.yml)
+![Standard Target](https://github.com/bemanproject/beman/blob/main/images/badges/cpp29.svg)
+[![Compiler Explorer Example](https://img.shields.io/badge/Try%20it%20on%20Compiler%20Explorer-grey?logo=compilerexplorer&logoColor=67c52a)](https://godbolt.org/z/Kcq9bbeWW)
+<!-- markdownlint-restore -->
 
 **Implements**: [`std::iterator_interface` (P2727R4)](https://wg21.link/P2727R4)
 
@@ -133,7 +137,7 @@ You can disable building tests by setting CMake option `BEMAN_ITERATOR_INTERFACE
 
 | Compiler | Version | C++ Standards | Standard Library  |
 |----------|---------|---------------|-------------------|
-| GCC      | 14-13   | C++26-C++20   | libstdc++         |
+| GCC      | 15-13   | C++26-C++20   | libstdc++         |
 | GCC      | 12      | C++23, C++20  | libstdc++         |
 | Clang    | 22-19   | C++26-C++20   | libstdc++, libc++ |
 | Clang    | 18      | C++26-C++20   | libc++            |
@@ -234,9 +238,3 @@ include an appropriate `beman.iterator_interface` header from your source code.
 ```c++
 #include <beman/iterator_interface/iterator_interface.hpp>
 ```
-
-> [!NOTE]
->
-> `beman.iterator_interface` headers are to be included with the `beman/iterator_interface/` prefix.
-> Altering include search paths to spell the include target another way (e.g.
-> `#include <iterator_interface.hpp>`) is unsupported.
