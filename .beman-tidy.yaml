@@ -7,3 +7,4 @@
 disabled_rules: []
 ignored_paths:
   - include/beman/iterator_interface/detail/stl_interfaces/
+  - infra/
